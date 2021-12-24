@@ -21,11 +21,11 @@ class UserRepo {
     QuerySnapshot querySnapshot =
         await users.doc(userId).collection('orders').get();
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       data['id'] = doc.id;
       orders.add(Order.fromJson(data));
-    });
+    }
 
     return orders;
   }
@@ -39,39 +39,12 @@ class UserRepo {
         .collection('items')
         .get();
 
-    querySnapshot.docs.forEach((doc) {
+    for (var doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
       data['id'] = doc.id;
       items.add(OrderItem.fromJson(data));
-    });
+    }
 
     return items;
   }
-
-//   Future<void> main() async {
-//   // Obtain science-fiction movies
-//   List<QueryDocumentSnapshot<Movie>> movies = await moviesRef
-//       .where('genre', isEqualTo: 'Sci-fi')
-//       .get()
-//       .then((snapshot) => snapshot.docs);
-
-//   // Add a movie
-//   await moviesRef.add(
-//     Movie(
-//       title: 'Star Wars: A New Hope (Episode IV)',
-//       genre: 'Sci-fi'
-//     ),
-//   );
-
-//   // Get a movie with the id 42
-//   Movie movie42 = await moviesRef.doc('42').get().then((snapshot) => snapshot.data()!);
-// }
-
-  // final moviesRef = FirebaseFirestore.instance.collection('movies').withConverter<Movie>(
-  //     fromFirestore: (snapshot, _) => Movie.fromJson(snapshot.data()!),
-  //     toFirestore: (movie, _) => movie.toJson(),
-  //   );
 }
-/**
- * {is_dorm_student: true, dorm_id: 1, name: Hussein El Feky, phone_number: +201224777905, available_balance: 10}
- */
