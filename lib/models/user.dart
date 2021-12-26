@@ -1,9 +1,10 @@
 class User {
   String name;
   String phoneNumber;
-  double availableBalance;
+  num availableBalance;
   bool isDormStudent;
   String? dormId;
+  String image;
 
   User({
     required this.name,
@@ -11,6 +12,7 @@ class User {
     required this.isDormStudent,
     this.dormId,
     required this.availableBalance,
+    required this.image,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class User {
       isDormStudent: json['is_dorm_student'],
       availableBalance: json['available_balance'],
       dormId: json['dorm_id'],
+      image: json['image'],
     );
   }
 }
