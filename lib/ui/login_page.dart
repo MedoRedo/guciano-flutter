@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:guciano_flutter/repositories/auth_repo.dart';
@@ -57,7 +58,10 @@ class _LoginPageState extends State<LoginPage> {
 
     final email = TextFormField(
       validator: (value) {
-        if (value!.isEmpty || !value.contains('@')) {
+        if (value!.isEmpty) {
+          return 'Please enter email.';
+        }
+        if (!EmailValidator.validate(value)) {
           return 'Please enter a valid email.';
         }
         return null;
