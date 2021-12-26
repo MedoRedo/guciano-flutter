@@ -4,7 +4,7 @@ class Order {
   Payment paymentOption;
   int itemsCount;
   DateTime timeStamp;
-  double totalPrice;
+  num totalPrice;
 
   Order({
     required this.id,

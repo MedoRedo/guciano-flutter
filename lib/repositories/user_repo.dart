@@ -13,7 +13,10 @@ class UserRepo {
   Future<User> getUserProfile() async {
     DocumentSnapshot documentSnapshot = await users.doc(userId).get();
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-    return User.fromJson(data);
+    print(data);
+    User user = User.fromJson(data);
+    print(user.name);
+    return user;
   }
 
   Future<List<Order>> getPreviousOrders() async {
