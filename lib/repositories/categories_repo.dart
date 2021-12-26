@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:guciano_flutter/models/Category.dart';
-import 'package:guciano_flutter/models/Item.dart';
+import 'package:guciano_flutter/models/category.dart';
+import 'package:guciano_flutter/models/product_item.dart';
 
 class categories_repo {
   late final CollectionReference categories;
