@@ -25,7 +25,7 @@ class Order {
           : Payment.cash,
       itemsCount: json['items_count'],
       timeStamp: DateTime.parse(json['timestamp'].toDate().toString()),
-      totalPrice: json['total_price'],
+      totalPrice: double.parse((json['total_price'].toString())),
     );
   }
 }

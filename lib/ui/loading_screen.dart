@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:guciano_flutter/ui/profile_page.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -35,13 +35,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     if (_initialized) {
-      Future.delayed(Duration(seconds: 1)).then((value) {
+      Future.delayed(const Duration(seconds: 1)).then((value) {
         Navigator.pop(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ProfilePage()));
       });
     }
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(),
     );
   }
