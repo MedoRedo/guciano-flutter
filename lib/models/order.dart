@@ -1,5 +1,6 @@
 class Order {
   String id;
+  int orderNumber;
   Delivery deliveryOption;
   Payment paymentOption;
   int itemsCount;
@@ -8,6 +9,7 @@ class Order {
 
   Order({
     required this.id,
+    required this.orderNumber,
     required this.deliveryOption,
     required this.paymentOption,
     required this.itemsCount,
@@ -18,6 +20,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
       id: json['id'],
+      orderNumber: json['order_number'],
       deliveryOption:
           json['delivery_option'] == 'dorm' ? Delivery.dorm : Delivery.kiosk,
       paymentOption: json['payment_option'] == 'credit_card'
