@@ -1,5 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/models/user.dart';
+import 'package:guciano_flutter/models/user_profile.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,10 +19,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final _balanceTextController = TextEditingController();
 
-  late Future<User> data;
+  final firebaseAuth = FirebaseAuth.instance;
+
+  late Future<UserProfile> data;
+
   @override
   void initState() {
-    data = UserRepo(userId: 'LdakKRYaBRRyhHciZN57kyYzAXD2').getUserProfile();
+    data = UserRepo(userId: firebaseAuth.currentUser!.uid).getUserProfile();
     super.initState();
   }
 
@@ -31,16 +35,16 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      body: FutureBuilder<User>(
+      body: FutureBuilder<UserProfile>(
         future: data,
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(
               child: CircularProgressIndicator(),
             );
-          User user = snapshot.data!;
+          UserProfile user = snapshot.data!;
           _nameTextController.text = user.name;
-          _emailTextController.text = 'mahmoud.redaelsayed';
+          _emailTextController.text = firebaseAuth.currentUser!.email!;
           _mobileTextController.text = user.phoneNumber;
           _balanceTextController.text = user.availableBalance.toString();
 

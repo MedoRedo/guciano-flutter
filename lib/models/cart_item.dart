@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'package:floor/floor.dart';
 
 @entity

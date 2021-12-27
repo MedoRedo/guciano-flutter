@@ -1,16 +1,16 @@
-class Item {
+class ProductItem {
   String imgPath;
   String name;
   int price;
   String itemId;
-  Item(
+  ProductItem(
       {required this.imgPath,
       required this.name,
       required this.price,
       required this.itemId});
 
-  factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(
+  factory ProductItem.fromJson(Map<String, dynamic> json) {
+    return ProductItem(
         imgPath: json['image'],
         name: json['name'],
         price: json['price'],

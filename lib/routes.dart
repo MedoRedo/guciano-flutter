@@ -7,6 +7,6 @@ import 'package:guciano_flutter/ui/prev_orders_page.dart';
 final routes = <String, WidgetBuilder>{
   LoginPage.tag: (context) => LoginPage(),
   HomePage.tag: (context) => HomePage(),
-  PrevOrders.tag: (context) => PrevOrders(),
+  PrevOrdersPage.tag: (context) => PrevOrdersPage(),
   PaymentPage.tag: (context) => PaymentPage(),
 };

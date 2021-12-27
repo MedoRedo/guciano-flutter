@@ -4,19 +4,19 @@ import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 
-class PrevOrders extends StatefulWidget {
+class PrevOrdersPage extends StatefulWidget {
   static String tag = 'prev-orders-page';
 
   @override
-  _PrevOrdersState createState() => _PrevOrdersState();
+  _PrevOrdersPageState createState() => _PrevOrdersPageState();
 }
 
-class _PrevOrdersState extends State<PrevOrders> {
-  late UserRepo ur;
+class _PrevOrdersPageState extends State<PrevOrdersPage> {
+  late UserRepo userRepo;
 
   @override
   void initState() {
-    ur = UserRepo(userId: FirebaseAuth.instance.currentUser!.uid);
+    userRepo = UserRepo(userId: FirebaseAuth.instance.currentUser!.uid);
     super.initState();
   }
 
@@ -71,7 +71,7 @@ class _PrevOrdersState extends State<PrevOrders> {
                               "Total Price ${order.totalPrice} EGP\nOrdered at ${order.timeStamp.year}/${order.timeStamp.month}/${order.timeStamp.day} ${order.timeStamp.hour}:${order.timeStamp.minute}"),
                           children: [
                             FutureBuilder(
-                                future: ur.getOrderDetails(order.id),
+                                future: userRepo.getOrderDetails(order.id),
                                 builder: (context,
                                     AsyncSnapshot<List<OrderItem>> snapshot) {
                                   if (snapshot.hasData &&

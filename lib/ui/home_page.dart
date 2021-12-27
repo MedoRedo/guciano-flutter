@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(PrevOrders.tag);
+          Navigator.of(context).pushNamed(PrevOrdersPage.tag);
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightGreen,
