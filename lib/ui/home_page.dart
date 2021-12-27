@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:guciano_flutter/ui/payment_page.dart';
 import 'package:guciano_flutter/ui/prev_orders_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -49,6 +50,20 @@ class _HomePageState extends State<HomePage> {
         child: Text('Logout', style: TextStyle(color: Colors.white)),
       ),
     );
+    final paymentBtn = Padding(
+      padding: EdgeInsets.zero,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(PaymentPage.tag);
+        },
+        padding: EdgeInsets.all(12),
+        color: Colors.lightGreen,
+        child: Text('Payment Screen', style: TextStyle(color: Colors.white)),
+      ),
+    );
 
     final body = Container(
       width: MediaQuery.of(context).size.width,
@@ -63,7 +78,8 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SizedBox(height: 24.0),
           logoutButton,
-          prevOrdersBtn
+          prevOrdersBtn,
+          paymentBtn
         ],
       ),
     );
