@@ -13,6 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late AuthRepo authRepo;
+
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController emailController = new TextEditingController();
@@ -30,6 +32,12 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _errorMessage = '';
     });
+  }
+
+  @override
+  void initState() {
+    authRepo = AuthRepo();
+    super.initState();
   }
 
   @override
@@ -108,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            auth_repo()
+            authRepo
                 .signIn(emailController.text, passwordController.text)
                 .then((uid) => {
                       if (uid != "0")

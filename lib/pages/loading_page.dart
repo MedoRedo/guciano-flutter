@@ -1,15 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/ui/profile_page.dart';
+import 'package:guciano_flutter/pages/profile_page.dart';
 
-class LoadingScreen extends StatefulWidget {
-  const LoadingScreen({Key? key}) : super(key: key);
+class LoadingPage extends StatefulWidget {
+  const LoadingPage({Key? key}) : super(key: key);
 
   @override
-  State<LoadingScreen> createState() => _LoadingScreenState();
+  State<LoadingPage> createState() => _LoadingPageState();
 }
 
-class _LoadingScreenState extends State<LoadingScreen> {
+class _LoadingPageState extends State<LoadingPage> {
   bool _initialized = false;
   bool _error = false;
 
