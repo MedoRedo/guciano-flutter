@@ -13,11 +13,14 @@ class CartItem {
 
   int count;
 
+  String image;
+
   CartItem({
     required this.id,
     required this.name,
     required this.price,
     required this.count,
+    required this.image,
   });
 }
 

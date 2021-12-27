@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:guciano_flutter/providers/CartProvider.dart';
+import 'package:guciano_flutter/providers/user_provider.dart';
+import 'package:guciano_flutter/ui/cart.dart';
 import 'package:guciano_flutter/ui/payment_page.dart';
 import 'package:guciano_flutter/ui/prev_orders_page.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = 'home-page';
@@ -65,6 +69,21 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
+    final CartBtn = Padding(
+      padding: EdgeInsets.zero,
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(CartScreen.tag);
+        },
+        padding: EdgeInsets.all(12),
+        color: Colors.lightGreen,
+        child: Text('Cart Screen', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
     final body = Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(28.0),
@@ -79,7 +98,8 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 24.0),
           logoutButton,
           prevOrdersBtn,
-          paymentBtn
+          paymentBtn,
+          CartBtn,
         ],
       ),
     );

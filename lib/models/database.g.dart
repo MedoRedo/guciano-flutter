@@ -82,7 +82,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CartItem` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `count` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `CartItem` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `price` REAL NOT NULL, `count` INTEGER NOT NULL, `image` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -106,7 +106,8 @@ class _$CartItemDao extends CartItemDao {
                   'id': item.id,
                   'name': item.name,
                   'price': item.price,
-                  'count': item.count
+                  'count': item.count,
+                  'image': item.image
                 }),
         _cartItemUpdateAdapter = UpdateAdapter(
             database,
@@ -116,7 +117,8 @@ class _$CartItemDao extends CartItemDao {
                   'id': item.id,
                   'name': item.name,
                   'price': item.price,
-                  'count': item.count
+                  'count': item.count,
+                  'image': item.image
                 }),
         _cartItemDeletionAdapter = DeletionAdapter(
             database,
@@ -126,7 +128,8 @@ class _$CartItemDao extends CartItemDao {
                   'id': item.id,
                   'name': item.name,
                   'price': item.price,
-                  'count': item.count
+                  'count': item.count,
+                  'image': item.image
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -148,7 +151,8 @@ class _$CartItemDao extends CartItemDao {
             id: row['id'] as String,
             name: row['name'] as String,
             price: row['price'] as double,
-            count: row['count'] as int));
+            count: row['count'] as int,
+            image: row['image'] as String));
   }
 
   @override
@@ -158,7 +162,8 @@ class _$CartItemDao extends CartItemDao {
             id: row['id'] as String,
             name: row['name'] as String,
             price: row['price'] as double,
-            count: row['count'] as int),
+            count: row['count'] as int,
+            image: row['image'] as String),
         arguments: [id]);
   }
 

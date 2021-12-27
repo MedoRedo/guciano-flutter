@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guciano_flutter/providers/CartProvider.dart';
 import 'package:guciano_flutter/routes.dart';
 import 'package:guciano_flutter/ui/home_page.dart';
 import 'package:guciano_flutter/ui/login_page.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,20 +29,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
-        },
-        child: MaterialApp(
-          title: 'Login',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.lightBlue,
-            fontFamily: 'Nunito',
-          ),
-          home: this.auth ? HomePage() : LoginPage(),
-          routes: routes,
-        ));
+    return ChangeNotifierProvider(
+      create: (ctx) => CartProvider(),
+      child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: MaterialApp(
+            title: 'Login',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.lightBlue,
+              fontFamily: 'Nunito',
+            ),
+            home: this.auth ? HomePage() : LoginPage(),
+            routes: routes,
+          )),
+    );
   }
 }
 
