@@ -2,7 +2,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:guciano_flutter/repositories/auth_repo.dart';
-import 'package:guciano_flutter/ui/home_page.dart';
+
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     final errorMessage = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        '$_errorMessage',
+        _errorMessage,
         style: TextStyle(fontSize: 14.0, color: Colors.red),
         textAlign: TextAlign.center,
       ),
@@ -109,7 +110,16 @@ class _LoginPageState extends State<LoginPage> {
           if (_formKey.currentState!.validate()) {
             auth_repo()
                 .signIn(emailController.text, passwordController.text)
-                .then((uid) => {Navigator.of(context).pushNamed(HomePage.tag)})
+                .then((uid) => {
+                      if (uid != "0")
+                        {Navigator.of(context).pushNamed(HomePage.tag)}
+                      else
+                        {
+                          setState(() {
+                            _errorMessage = "Email or password is incorrect.";
+                          })
+                        }
+                    })
                 .catchError((error) => {processError(error)});
           }
         },
