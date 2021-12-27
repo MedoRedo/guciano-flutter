@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/ui/payment_page.dart';
-import 'package:guciano_flutter/ui/prev_orders_page.dart';
+import 'package:guciano_flutter/pages/payment_page.dart';
+import 'package:guciano_flutter/pages/prev_orders_page.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = 'home-page';

@@ -121,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 16.0,
                       ),
                       Text(
-                        'Available balance',
+                        'Available Balance',
                         style: TextStyle(
                             fontSize: 16.0, fontWeight: FontWeight.bold),
                       ),

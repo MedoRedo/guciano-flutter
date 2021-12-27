@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guciano_flutter/pages/home_page.dart';
+import 'package:guciano_flutter/pages/login_page.dart';
 import 'package:guciano_flutter/routes.dart';
-import 'package:guciano_flutter/ui/home_page.dart';
-import 'package:guciano_flutter/ui/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
