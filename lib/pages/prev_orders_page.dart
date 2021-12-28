@@ -20,18 +20,91 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
     super.initState();
   }
 
+  Widget getDeliveryOptionImage(Delivery delivery) {
+    switch (delivery) {
+      case Delivery.kiosk:
+        return const Image(
+          image: AssetImage("assets/ic_kiosk.png"),
+          height: 24,
+        );
+      case Delivery.dorm:
+        return const Image(
+          image: AssetImage("assets/ic_dorm.png"),
+          height: 24,
+        );
+    }
+  }
+
+  Widget getDeliveryOptionText(Delivery delivery) {
+    switch (delivery) {
+      case Delivery.kiosk:
+        return const Text("Kiosk");
+      case Delivery.dorm:
+        return const Text("Dorm");
+    }
+  }
+
+  Widget getPaymentOptionImage(Payment payment) {
+    switch (payment) {
+      case Payment.cash:
+        return const Image(
+          image: AssetImage("assets/ic_cash.png"),
+          height: 24,
+        );
+      case Payment.creditCard:
+        return const Image(
+          image: AssetImage("assets/ic_credit_card.png"),
+          height: 24,
+        );
+    }
+  }
+
+  Widget getPaymentOptionText(Payment payment) {
+    switch (payment) {
+      case Payment.cash:
+        return const Text("Cash");
+      case Payment.creditCard:
+        return const Text("Credit Card");
+    }
+  }
+
+  Widget getOrderStatusImage(OrderStatus orderStatus) {
+    switch (orderStatus) {
+      case OrderStatus.inProgress:
+        return const Image(
+          image: AssetImage("assets/ic_cooking.png"),
+          height: 24,
+        );
+      case OrderStatus.delivering:
+        return const Image(
+          image: AssetImage("assets/ic_delivery.png"),
+          height: 24,
+        );
+      case OrderStatus.done:
+        return const Image(
+          image: AssetImage("assets/ic_done.png"),
+          height: 24,
+        );
+    }
+  }
+
+  Widget getOrderStatusText(OrderStatus orderStatus) {
+    switch (orderStatus) {
+      case OrderStatus.inProgress:
+        return const Text("In Progress");
+      case OrderStatus.delivering:
+        return const Text("Delivering");
+      case OrderStatus.done:
+        return const Text("Done");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.1,
         title: Text("Previous Orders"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.list),
-            onPressed: () {},
-          )
-        ],
       ),
       body: FutureBuilder(
         future: UserRepo(userId: FirebaseAuth.instance.currentUser!.uid)
@@ -44,8 +117,8 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
             orders.sort((order1, order2) =>
                 order1.timeStamp.compareTo(order2.timeStamp));
 
-            return Align(
-              alignment: Alignment.topCenter,
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
               child: Container(
                 child: ListView.builder(
                   itemCount: snapshot.data!.length,
@@ -55,20 +128,75 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                   itemBuilder: (BuildContext context, int index) {
                     Order order = orders[index];
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       child: Card(
                         child: ExpansionTile(
-                          leading: order.paymentOption == Payment.cash
-                              ? Image(image: AssetImage("assets/ic_cash.png"))
-                              : Image(
-                                  image:
-                                      AssetImage("assets/ic_credit_card.png")),
-                          trailing: order.deliveryOption == Delivery.dorm
-                              ? Image(image: AssetImage("assets/ic_dorm.png"))
-                              : Image(image: AssetImage("assets/ic_kiosk.png")),
-                          title: Text("Order ${order.orderNumber}"),
-                          subtitle: Text(
-                              "Total Price ${order.totalPrice} EGP\nOrdered at ${order.timeStamp.year}/${order.timeStamp.month}/${order.timeStamp.day} ${order.timeStamp.hour}:${order.timeStamp.minute}"),
+                          title: Column(children: [
+                            SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Order ${order.orderNumber}",
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ]),
+                          subtitle: Column(children: [
+                            SizedBox(height: 8),
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      const Image(
+                                        image: AssetImage("assets/ic_time.png"),
+                                        height: 24,
+                                      ),
+                                      SizedBox(width: 3),
+                                      Text(
+                                        "Ordered at ${order.timeStamp.year}/${order.timeStamp.month}/${order.timeStamp.day} ${order.timeStamp.hour}:${order.timeStamp.minute}",
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    "${order.totalPrice} EGP",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF19A15E)),
+                                  ),
+                                ]),
+                            SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    getDeliveryOptionImage(
+                                        order.deliveryOption),
+                                    SizedBox(width: 3),
+                                    getDeliveryOptionText(order.deliveryOption),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    getPaymentOptionImage(order.paymentOption),
+                                    SizedBox(width: 3),
+                                    getPaymentOptionText(order.paymentOption),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    getOrderStatusImage(order.orderStatus),
+                                    SizedBox(width: 3),
+                                    getOrderStatusText(order.orderStatus),
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(height: 8),
+                          ]),
                           children: [
                             FutureBuilder(
                                 future: userRepo.getOrderDetails(order.id),
