@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Order {
   String id;
   int orderNumber;
@@ -18,6 +20,10 @@ class Order {
     required this.timeStamp,
     required this.totalPrice,
   });
+
+  String getOrderTimestampFormatted() {
+    return DateFormat('dd/MM/yyyy, hh:mm a').format(timeStamp);
+  }
 
   static OrderStatus mapToOrderStatus(String orderStatus) {
     switch (orderStatus) {

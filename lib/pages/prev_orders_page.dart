@@ -155,9 +155,7 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                                         height: 24,
                                       ),
                                       SizedBox(width: 3),
-                                      Text(
-                                        "Ordered at ${order.timeStamp.year}/${order.timeStamp.month}/${order.timeStamp.day} ${order.timeStamp.hour}:${order.timeStamp.minute}",
-                                      )
+                                      Text(order.getOrderTimestampFormatted())
                                     ],
                                   ),
                                   Text(
