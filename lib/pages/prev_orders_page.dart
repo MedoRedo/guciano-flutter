@@ -225,6 +225,12 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                                               title: Text(orderItem.name),
                                               subtitle: Text(
                                                   "${orderItem.price} EGP"),
+                                              trailing: Text(
+                                                  "×${orderItem.count}",
+                                                  style: const TextStyle(
+                                                      fontSize: 24,
+                                                      color:
+                                                          Color(0xFF808080))),
                                             ),
                                           );
                                         });

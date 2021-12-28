@@ -40,18 +40,17 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
-      id: json['id'],
-      orderNumber: json['order_number'],
-      deliveryOption:
-          json['delivery_option'] == 'dorm' ? Delivery.dorm : Delivery.kiosk,
-      paymentOption: json['payment_option'] == 'credit_card'
-          ? Payment.creditCard
-          : Payment.cash,
-      orderStatus: mapToOrderStatus(json['order_status']),
-      itemsCount: json['items_count'],
-      timeStamp: json['timestamp'].toDate(),
-      totalPrice: double.parse((json['total_price'].toString())),
-    );
+        id: json['id'],
+        orderNumber: json['order_number'],
+        deliveryOption:
+            json['delivery_option'] == 'dorm' ? Delivery.dorm : Delivery.kiosk,
+        paymentOption: json['payment_option'] == 'credit_card'
+            ? Payment.creditCard
+            : Payment.cash,
+        orderStatus: mapToOrderStatus(json['order_status']),
+        itemsCount: json['items_count'],
+        timeStamp: json['timestamp'].toDate(),
+        totalPrice: json['total_price']);
   }
 }
 
