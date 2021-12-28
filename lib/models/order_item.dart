@@ -3,7 +3,7 @@ class OrderItem {
   int count;
   String imgUrl;
   String name;
-  double price;
+  num price;
 
   OrderItem({
     required this.id,

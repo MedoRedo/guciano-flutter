@@ -1,32 +1,54 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:guciano_flutter/providers/CartProvider.dart';
+import 'package:guciano_flutter/routes.dart';
+import 'package:guciano_flutter/widgets/counter.dart';
+import 'package:provider/provider.dart';
+import 'package:guciano_flutter/pages/home_page.dart';
+import 'package:guciano_flutter/pages/login_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      runApp(MyApp(auth: false));
+    } else {
+      runApp(MyApp(auth: true));
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool auth;
+
+  MyApp({required this.auth});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (ctx) => CartProvider(),
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: MaterialApp(
+          title: 'Login',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.lightBlue,
+            fontFamily: 'Nunito',
+          ),
+          home: MyHomePage(
+            title: 'Home',
+          ),
+          routes: routes,
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -50,50 +72,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _initialized = false;
-  bool _error = false;
-
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
+  int count = 0;
+  void increment() {
+    setState(() {
+      count++;
+    });
   }
 
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
+  void decrement() {
+    setState(() {
+      if (count != 0) count--;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_initialized) {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc('LdakKRYaBRRyhHciZN57kyYzAXD2')
-          .collection('orders')
-          .get()
-          .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-          print(doc.id);
-          print(doc.data());
-        });
-      });
-    }
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Container(),
+      body: Center(
+          child: Counter(
+        count: count,
+        increment: increment,
+        decrement: decrement,
+      )),
     );
   }
 }

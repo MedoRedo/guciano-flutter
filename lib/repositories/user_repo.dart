@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
-import 'package:guciano_flutter/models/user.dart';
+import 'package:guciano_flutter/models/user_profile.dart';
 
 class UserRepo {
   late final CollectionReference users;
   final String userId;
+
   UserRepo({required this.userId}) {
     users = FirebaseFirestore.instance.collection('users');
   }
 
-  Future<User> getUserProfile() async {
+  Future<UserProfile> getUserProfile() async {
     DocumentSnapshot documentSnapshot = await users.doc(userId).get();
     Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-    return User.fromJson(data);
+    return UserProfile.fromJson(data);
   }
 
   Future<List<Order>> getPreviousOrders() async {

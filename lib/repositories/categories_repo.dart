@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:guciano_flutter/models/Category.dart';
-import 'package:guciano_flutter/models/Item.dart';
+import 'package:guciano_flutter/models/category.dart';
+import 'package:guciano_flutter/models/product_item.dart';
 
-class categories_repo {
+class CategoriesRepo {
   late final CollectionReference categories;
-  categories_repo() {
+  CategoriesRepo() {
     categories = FirebaseFirestore.instance.collection('categories');
   }
 
@@ -20,15 +20,15 @@ class categories_repo {
     return ans;
   }
 
-  Future<List<Item>> getCategoryItems(categoryId) async {
-    List<Item> ans = [];
+  Future<List<ProductItem>> getCategoryItems(categoryId) async {
+    List<ProductItem> ans = [];
     QuerySnapshot querySnapshot =
         await categories.doc(categoryId).collection('items').get();
 
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> item = doc.data() as Map<String, dynamic>;
       item['id'] = doc.id;
-      ans.add(Item.fromJson(item));
+      ans.add(ProductItem.fromJson(item));
     }
     return ans;
   }
