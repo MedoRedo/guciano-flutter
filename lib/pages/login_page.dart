@@ -110,10 +110,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
+      child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             authRepo
@@ -131,8 +128,6 @@ class _LoginPageState extends State<LoginPage> {
                 .catchError((error) => {processError(error)});
           }
         },
-        padding: EdgeInsets.all(12),
-        color: Colors.lightBlueAccent,
         child: Text('Log In', style: TextStyle(color: Colors.white)),
       ),
     );
