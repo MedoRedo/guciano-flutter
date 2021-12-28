@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthRepo {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   Future<String> signIn(final String email, final String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       User? user = userCredential.user;
       print(user);
@@ -16,5 +18,9 @@ class AuthRepo {
       }
       return "0";
     }
+  }
+
+  Future signOut() {
+    return firebaseAuth.signOut();
   }
 }

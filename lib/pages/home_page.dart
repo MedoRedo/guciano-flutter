@@ -36,21 +36,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    final logoutButton = Padding(
-      padding: EdgeInsets.zero,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-          _firebaseAuth.signOut();
-          Navigator.popUntil(context, (Route<dynamic> route) => route.isFirst);
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.lightGreen,
-        child: Text('Logout', style: TextStyle(color: Colors.white)),
-      ),
-    );
     final paymentBtn = Padding(
       padding: EdgeInsets.zero,
       child: RaisedButton(
@@ -93,7 +78,6 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: <Widget>[
           SizedBox(height: 24.0),
-          logoutButton,
           prevOrdersBtn,
           paymentBtn,
           CartBtn,

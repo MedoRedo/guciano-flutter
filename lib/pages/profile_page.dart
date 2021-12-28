@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/user_profile.dart';
+import 'package:guciano_flutter/pages/login_page.dart';
+import 'package:guciano_flutter/repositories/auth_repo.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,13 +20,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final _balanceTextController = TextEditingController();
 
-  final firebaseAuth = FirebaseAuth.instance;
+  late final authRepo;
+  late final userRepo;
 
   late Future<UserProfile> data;
 
   @override
   void initState() {
-    data = UserRepo().getUserProfile();
+    authRepo = AuthRepo();
+    userRepo = UserRepo();
+    data = userRepo.getUserProfile();
     super.initState();
   }
 
@@ -133,6 +137,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                 ),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  authRepo.signOut().then((_) => Navigator.of(context)
+                      .pushNamedAndRemoveUntil(
+                          LoginPage.tag, (Route<dynamic> route) => false));
+                },
+                child: Text('Log Out', style: TextStyle(color: Colors.white)),
               ),
             ],
           );
