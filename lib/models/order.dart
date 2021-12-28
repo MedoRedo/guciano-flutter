@@ -43,7 +43,7 @@ class Order {
           : Payment.cash,
       orderStatus: mapToOrderStatus(json['order_status']),
       itemsCount: json['items_count'],
-      timeStamp: DateTime.parse(json['timestamp'].toDate().toString()),
+      timeStamp: json['timestamp'].toDate(),
       totalPrice: double.parse((json['total_price'].toString())),
     );
   }
