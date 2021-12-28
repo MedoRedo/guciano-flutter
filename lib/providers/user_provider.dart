@@ -5,8 +5,9 @@ import 'package:guciano_flutter/repositories/user_repo.dart';
 class UserProvider with ChangeNotifier {
   late final UserRepo _userRepo;
   late UserProfile user;
-  UserProvider(String userId) {
-    _userRepo = UserRepo(userId: userId);
+
+  UserProvider() {
+    _userRepo = UserRepo();
   }
 
   Future<void> getUserProfile() async {

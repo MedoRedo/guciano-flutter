@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    data = UserRepo(userId: firebaseAuth.currentUser!.uid).getUserProfile();
+    data = UserRepo().getUserProfile();
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
             );
           UserProfile user = snapshot.data!;
           _nameTextController.text = user.name;
-          _emailTextController.text = firebaseAuth.currentUser!.email!;
+          _emailTextController.text = user.email;
           _mobileTextController.text = user.phoneNumber;
           _balanceTextController.text = user.availableBalance.toString();
 
