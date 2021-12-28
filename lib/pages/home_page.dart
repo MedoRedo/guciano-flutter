@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/pages/cart.dart';
+import 'package:guciano_flutter/pages/cart_page.dart';
 import 'package:guciano_flutter/pages/payment_page.dart';
 import 'package:guciano_flutter/pages/prev_orders_page.dart';
 
@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(CartScreen.tag);
+          Navigator.of(context).pushNamed(CartPage.tag);
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightGreen,
