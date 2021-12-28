@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/providers/CartProvider.dart';
 import 'package:guciano_flutter/routes.dart';
+import 'package:guciano_flutter/widgets/counter.dart';
 import 'package:provider/provider.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
@@ -32,19 +33,22 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (ctx) => CartProvider(),
       child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: MaterialApp(
-            title: 'Login',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.lightBlue,
-              fontFamily: 'Nunito',
-            ),
-            home: this.auth ? HomePage() : LoginPage(),
-            routes: routes,
-          )),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: MaterialApp(
+          title: 'Login',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.lightBlue,
+            fontFamily: 'Nunito',
+          ),
+          home: MyHomePage(
+            title: 'Home',
+          ),
+          routes: routes,
+        ),
+      ),
     );
   }
 }
@@ -68,50 +72,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _initialized = false;
-  bool _error = false;
-
-  void initializeFlutterFire() async {
-    try {
-      await Firebase.initializeApp();
-      setState(() {
-        _initialized = true;
-      });
-    } catch (e) {
-      setState(() {
-        _error = true;
-      });
-    }
+  int count = 0;
+  void increment() {
+    setState(() {
+      count++;
+    });
   }
 
-  @override
-  void initState() {
-    initializeFlutterFire();
-    super.initState();
+  void decrement() {
+    setState(() {
+      if (count != 0) count--;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_initialized) {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc('LdakKRYaBRRyhHciZN57kyYzAXD2')
-          .collection('orders')
-          .get()
-          .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-          print(doc.id);
-          print(doc.data());
-        });
-      });
-    }
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Container(),
+      body: Center(
+          child: Counter(
+        count: count,
+        increment: increment,
+        decrement: decrement,
+      )),
     );
   }
 }
