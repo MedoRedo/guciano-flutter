@@ -101,10 +101,6 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.1,
-        title: Text("Previous Orders"),
-      ),
       body: FutureBuilder(
         future: userRepo.getPreviousOrders(),
         builder: (context, AsyncSnapshot<List<Order>> snapshot) {
