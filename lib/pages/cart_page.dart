@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/pages/checkout.dart';
-import 'package:guciano_flutter/providers/CartProvider.dart';
+import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'home_page.dart';

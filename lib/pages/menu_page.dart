@@ -26,7 +26,7 @@ class _MenuPageState extends State<MenuPage> {
   late List<ProductItem> items;
   late Category currCat;
 
-  void getCategories() async {
+  Future<void> getCategories() async {
     try {
       cat = await CategoriesRepo().getCategories();
       currCat = cat[0];
@@ -52,65 +52,69 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.all(16),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text(
-            "Categories",
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 22,
-            ),
-          ),
-          Expanded(
-              child: ListView.builder(
-                  clipBehavior: Clip.none,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: cat.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            currCat = cat[index];
-                            getItems(currCat.categoryId);
-                          });
-                        },
-                        child: CategoryWidget(
-                          category: cat[index],
-                        ));
-                  })),
-          Text(
-            currCat.name,
-            textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-          ),
-          Expanded(
-            flex: 3,
-            child: FutureBuilder<List<ProductItem>>(
-              future: CategoriesRepo().getCategoryItems(currCat.categoryId),
-              builder: (BuildContext context,
-                  AsyncSnapshot<List<ProductItem>> snapshot) {
-                if (snapshot.hasError) {
-                  return Text("Something went wrong");
-                }
-
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return ListView.builder(
-                      itemCount: items.length,
+    return !_initialized
+        ? LoadingScreen()
+        : Container(
+            margin: const EdgeInsets.all(16),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text(
+                "Categories",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 22,
+                ),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                      clipBehavior: Clip.none,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: cat.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                            onTap: () {},
-                            child: ProductWidget(
-                              item: items[index],
+                        return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                currCat = cat[index];
+                                getItems(currCat.categoryId);
+                              });
+                            },
+                            child: CategoryWidget(
+                              category: cat[index],
                             ));
-                      });
-                }
+                      })),
+              Text(
+                currCat.name,
+                textAlign: TextAlign.left,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
+              Expanded(
+                flex: 3,
+                child: FutureBuilder<List<ProductItem>>(
+                  future: CategoriesRepo().getCategoryItems(currCat.categoryId),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ProductItem>> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("Something went wrong");
+                    }
 
-                return LoadingScreen();
-              },
-            ),
-          ),
-        ]));
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                                onTap: () {},
+                                child: ProductWidget(
+                                  item: items[index],
+                                ));
+                          });
+                    }
+
+                    return LoadingScreen();
+                  },
+                ),
+              ),
+            ]));
   }
 }

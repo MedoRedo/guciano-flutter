@@ -4,8 +4,9 @@ class LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          alignment: Alignment.topCenter, child: CircularProgressIndicator()),
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }

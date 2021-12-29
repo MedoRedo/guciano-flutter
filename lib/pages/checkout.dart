@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/models/user_profile.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
-import 'package:guciano_flutter/providers/CartProvider.dart';
+import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void placeOrder() {
     // place order here ....
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    var cartItems = cartProvider.getAllItems();
+
     Navigator.of(context).pushNamed(HomePage.tag);
   }
 
