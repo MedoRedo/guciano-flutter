@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/navigation_page.dart';
+import 'package:guciano_flutter/pages/MenuScreen.dart';
 import 'package:guciano_flutter/pages/prev_orders_page.dart';
 import 'package:guciano_flutter/pages/profile_page.dart';
 
@@ -24,11 +25,11 @@ class _HomePageState extends State<HomePage> {
 
   static final List<NavigationPage> navigationPages = [
     NavigationPage(
-        title: 'Guciano',
-        widget: const Text(
-          'Main Menu',
-          style: optionStyle,
-        )),
+      title: 'Guciano',
+      widget: Menu(),
+      //  style: optionStyle,
+      //   )
+    ),
     NavigationPage(title: 'My Orders', widget: PrevOrdersPage()),
     NavigationPage(
         title: 'Cart',

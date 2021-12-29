@@ -87,7 +87,7 @@ class _MenuState extends State<Menu> {
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: FutureBuilder<List<ProductItem>>(
               future: CategoriesRepo().getCategoryItems(currCat.categoryId),
               builder: (BuildContext context,
