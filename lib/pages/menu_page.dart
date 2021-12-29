@@ -1,32 +1,31 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/assets/categories.dart';
 import 'package:guciano_flutter/models/category.dart';
 import 'package:guciano_flutter/models/product_item.dart';
 import 'package:guciano_flutter/repositories/categories_repo.dart';
-import 'package:guciano_flutter/widgets/loadingScreen.dart';
+import 'package:guciano_flutter/widgets/loading_screen.dart';
 
-import '../widgets/catListItem.dart';
-import '../widgets/listItem.dart';
+import '../widgets/category_widget.dart';
+import '../widgets/product_widget.dart';
 
-class Menu extends StatefulWidget {
+class MenuPage extends StatefulWidget {
   // final List<Category> catList;
 
-  const Menu({
+  const MenuPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  _MenuState createState() => _MenuState();
+  _MenuPageState createState() => _MenuPageState();
 }
 
-class _MenuState extends State<Menu> {
+class _MenuPageState extends State<MenuPage> {
   bool _initialized = false;
   bool _error = false;
 
   late List<Category> cat;
   late List<ProductItem> items;
   late Category currCat;
+
   void getCategories() async {
     try {
       cat = await CategoriesRepo().getCategories();
@@ -77,7 +76,7 @@ class _MenuState extends State<Menu> {
                             getItems(currCat.categoryId);
                           });
                         },
-                        child: catListItem(
+                        child: CategoryWidget(
                           category: cat[index],
                         ));
                   })),
@@ -102,7 +101,7 @@ class _MenuState extends State<Menu> {
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                             onTap: () {},
-                            child: listItem(
+                            child: ProductWidget(
                               item: items[index],
                             ));
                       });

@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/category.dart';
 
-class catListItem extends StatefulWidget {
-  const catListItem({Key? key, required this.category}) : super(key: key);
+class CategoryWidget extends StatefulWidget {
+  const CategoryWidget({Key? key, required this.category}) : super(key: key);
   final Category category;
 
   @override
-  _catListItemState createState() => _catListItemState();
+  _CategoryWidgetState createState() => _CategoryWidgetState();
 }
 
-class _catListItemState extends State<catListItem>
+class _CategoryWidgetState extends State<CategoryWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 

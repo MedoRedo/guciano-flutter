@@ -1,17 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/models/category.dart';
 import 'package:guciano_flutter/models/product_item.dart';
 
-class listItem extends StatefulWidget {
-  const listItem({Key? key, required this.item}) : super(key: key);
+class ProductWidget extends StatefulWidget {
+  const ProductWidget({Key? key, required this.item}) : super(key: key);
   final ProductItem item;
 
   @override
-  _listItemState createState() => _listItemState();
+  _ProductWidgetState createState() => _ProductWidgetState();
 }
 
-class _listItemState extends State<listItem>
+class _ProductWidgetState extends State<ProductWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   @override

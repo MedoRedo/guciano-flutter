@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/pages/profile_page.dart';
-import 'package:guciano_flutter/providers/CartProvider.dart';
+import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/routes.dart';
-import 'package:guciano_flutter/widgets/counter.dart';
+import 'package:guciano_flutter/widgets/counter_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
