@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
@@ -16,7 +15,7 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
 
   @override
   void initState() {
-    userRepo = UserRepo(userId: FirebaseAuth.instance.currentUser!.uid);
+    userRepo = UserRepo();
     super.initState();
   }
 
@@ -102,13 +101,8 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.1,
-        title: Text("Previous Orders"),
-      ),
       body: FutureBuilder(
-        future: UserRepo(userId: FirebaseAuth.instance.currentUser!.uid)
-            .getPreviousOrders(),
+        future: userRepo.getPreviousOrders(),
         builder: (context, AsyncSnapshot<List<Order>> snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());

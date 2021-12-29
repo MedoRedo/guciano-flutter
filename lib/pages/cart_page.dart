@@ -3,16 +3,16 @@ import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
 
-class CartScreen extends StatefulWidget {
-  static String tag = 'Cart-page';
+class CartPage extends StatefulWidget {
+  static String tag = 'cart-page';
 
-  const CartScreen({Key? key}) : super(key: key);
+  const CartPage({Key? key}) : super(key: key);
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
