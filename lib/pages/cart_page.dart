@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
+import 'package:guciano_flutter/pages/checkout.dart';
 import 'package:guciano_flutter/providers/CartProvider.dart';
 import 'package:provider/provider.dart';
+
+import 'home_page.dart';
 
 class CartPage extends StatefulWidget {
   static String tag = 'cart-page';
@@ -16,18 +19,6 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  void deleteItem(index) {
-    print("Item should be deleted " + index.toString());
-  }
-
-  void incItem(index) {
-    print("Item should be incremented " + index.toString());
-  }
-
-  void decItem(index) {
-    print("Item should be decremented " + index.toString());
   }
 
   Widget renderAddList(cartItems, CartProvider cartProvider) {
@@ -139,45 +130,6 @@ class _CartPageState extends State<CartPage> {
         padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 130),
         child: ListView(
           children: <Widget>[
-            SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(
-                  "Shipping Address",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                // IconButton(
-                //   onPressed: () {},
-                //   icon: Icon(
-                //     Icons.edit,
-                //   ),
-                // ),
-              ],
-            ),
-            SizedBox(height: 10.0),
-            ListTile(
-              title: Text(
-                "John Doe",
-                style: TextStyle(
-//                    fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              subtitle: Text("1278 Loving Acres Road Kansas City, MO 64110"),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              "Payment Method",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Card(elevation: 4.0, child: Text("Hussien add you payment here")),
             SizedBox(height: 20.0),
             Text(
               "Items",
@@ -190,112 +142,49 @@ class _CartPageState extends State<CartPage> {
           ],
         ),
       ),
-      bottomSheet: Card(
-        elevation: 4.0,
-        child: Container(
-          child: ListView(
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                  ),
-                  child: TextField(
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                        ),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      hintText: "Coupon Code",
-                      prefixIcon: Icon(
-                        Icons.redeem,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      hintStyle: TextStyle(
-                        fontSize: 15.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                    maxLines: 1,
-                    // controller: _couponlControl,
-                  ),
+      bottomSheet: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            // padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+            width: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.grey,
+            ),
+            child: TextButton(
+              child: Text(
+                "Add Items".toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Total",
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        Text(
-                          cartProvider.totalPrice.toString(),
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                            color: Theme.of(context).accentColor,
-                          ),
-                        ),
-                        Text(
-                          "Delivery charges included",
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
-                    width: 150.0,
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.cyan,
-                    ),
-                    child: TextButton(
-                      child: Text(
-                        "Checkout".toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              onPressed: () {
+                Navigator.of(context).pushNamed(HomePage.tag);
+              },
+            ),
           ),
-          height: 130,
-        ),
+          Container(
+            // padding: EdgeInsets.fromLTRB(5, 5, 10, 5),
+            width: 150.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.cyan,
+            ),
+            child: TextButton(
+              child: Text(
+                "Checkout".toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed(CheckoutPage.tag);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

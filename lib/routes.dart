@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:guciano_flutter/pages/cart_page.dart';
+import 'package:guciano_flutter/pages/checkout.dart';
 
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
@@ -12,4 +13,5 @@ final routes = <String, WidgetBuilder>{
   PrevOrdersPage.tag: (context) => PrevOrdersPage(),
   PaymentPage.tag: (context) => PaymentPage(),
   CartPage.tag: (context) => CartPage(),
+  CheckoutPage.tag: (context) => CheckoutPage(),
 };

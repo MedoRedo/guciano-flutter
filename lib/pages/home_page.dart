@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/pages/cart_page.dart';
-import 'package:guciano_flutter/pages/payment_page.dart';
+import 'package:guciano_flutter/models/navigation_page.dart';
+import 'package:guciano_flutter/pages/MenuScreen.dart';
 import 'package:guciano_flutter/pages/prev_orders_page.dart';
 import 'package:guciano_flutter/pages/profile_page.dart';
+
+import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = 'home-page';
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -23,22 +25,26 @@ class _HomePageState extends State<HomePage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  static final List<Widget> _widgetOptions = [
-    Text(
-      'Home',
-      style: optionStyle,
+  static final List<NavigationPage> navigationPages = [
+    NavigationPage(
+      title: 'Guciano',
+      widget: Menu(),
+      //  style: optionStyle,
+      //   )
     ),
-    Text(
-      'My Orders',
-      style: optionStyle,
-    ),
-    CartPage(),
-    ProfilePage(),
+    NavigationPage(title: 'My Orders', widget: PrevOrdersPage()),
+    NavigationPage(title: 'Cart', widget: CartPage()),
+    NavigationPage(title: 'Profile', widget: ProfilePage()),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _widgetOptions[_selectedIndex]),
+      appBar: AppBar(
+        elevation: 0.1,
+        title: Text(navigationPages[_selectedIndex].title),
+      ),
+      body: Center(child: navigationPages[_selectedIndex].widget),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
