@@ -11,7 +11,6 @@ class Counter extends StatelessWidget {
     required this.decrement,
   }) : super(key: key);
 
-  void add() {}
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
