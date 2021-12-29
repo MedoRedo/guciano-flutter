@@ -23,16 +23,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   bool _initialized = false;
   bool _error = false;
-  final Category drink = Category(
-      imgPath:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrlx_sfhzaIb2c-HPaAOyIaih9OBwHDGak2A&usqp=CAU",
-      name: "Drinks",
-      categoryId: "0");
-  final Category meals = Category(
-      imgPath:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/1200px-A_small_cup_of_coffee.JPG",
-      name: "Meals",
-      categoryId: "1");
+
   late List<Category> cat;
   late List<ProductItem> items;
   late Category currCat;
