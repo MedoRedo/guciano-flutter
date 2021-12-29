@@ -32,10 +32,7 @@ class _HomePageState extends State<HomePage> {
       'My Orders',
       style: optionStyle,
     ),
-    Text(
-      'Cart',
-      style: optionStyle,
-    ),
+    CartPage(),
     ProfilePage(),
   ];
   @override
