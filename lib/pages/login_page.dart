@@ -117,7 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                 .signIn(emailController.text, passwordController.text)
                 .then((uid) => {
                       if (uid != "0")
-                        {Navigator.of(context).pushNamed(HomePage.tag)}
+                        {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, HomePage.tag, (route) => false)
+                        }
                       else
                         {
                           setState(() {

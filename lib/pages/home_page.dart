@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/navigation_page.dart';
 import 'package:guciano_flutter/pages/menu_page.dart';
@@ -22,20 +23,18 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   static final List<NavigationPage> navigationPages = [
-    NavigationPage(
-      title: 'Guciano',
-      widget: MenuPage(),
-      //  style: optionStyle,
-      //   )
-    ),
+    NavigationPage(title: 'Guciano', widget: MenuPage()),
     NavigationPage(title: 'My Orders', widget: PrevOrdersPage()),
     NavigationPage(title: 'Cart', widget: CartPage()),
     NavigationPage(title: 'Profile', widget: ProfilePage()),
   ];
+
+  @override
+  void initState() {
+    final fcm = FirebaseMessaging.instance;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
