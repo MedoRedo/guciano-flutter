@@ -15,9 +15,9 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
   }
 
   // Get request query.
-  const query = request.query;
-  const userId = query.userId;
-  const order = query.order;
+  const body = request.body;
+  const userId = body.userId;
+  const order = body.order;
 
   // Initialize user reference.
   const userRef = db.collection('users').doc(userId);
@@ -60,8 +60,8 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
   await orderRef.create({
     order_number: orderNumber,
     order_status: 'in_progress',
-    delivery_method: order.deliveryMethod,
-    payment_method: order.paymentMethod,
+    delivery_option: order.delivery_option,
+    payment_option: order.payment_option,
     items_count: order.items.length,
     total_price: totalPrice,
     timestamp: admin.firestore.FieldValue.serverTimestamp()
@@ -97,27 +97,30 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
     last_order_number: orderNumber
   });
 
+  const tokens = userDoc.tokens;
+
   // Update order status after some time.
-  if (order.deliveryMethod == 'kiosk') {
+  if (order.delivery_option == 'kiosk') {
     setTimeout(async function () {
       await orderRef.update({
         order_status: 'done'
-      }).then({
-        // TODO: Send a notification to the user.
+      }).then(value => {
+        var payload = {notification: {title: 'Ready', body: 'Your order is ready'}}
+        admin.messaging().sendToDevice(tokens, payload)
       });
     }, 10000);
-  } else if (order.deliveryMethod == 'dorm') {
+  } else if (order.delivery_option == 'dorm') {
     setTimeout(async function () {
       await orderRef.update({
         order_status: 'delivering'
-      }).then({
+      }).then(value => {
         // TODO: Send a notification to the user.
       });
 
       setTimeout(async function () {
         await orderRef.update({
           order_status: 'done'
-        }).then({
+        }).then(value => {
           // TODO: Send a notification to the user.
         });
       }, 10000);

@@ -4,6 +4,8 @@ import 'package:guciano_flutter/models/navigation_page.dart';
 import 'package:guciano_flutter/pages/menu_page.dart';
 import 'package:guciano_flutter/pages/prev_orders_page.dart';
 import 'package:guciano_flutter/pages/profile_page.dart';
+import 'package:guciano_flutter/utils/local_notification_service.dart';
+import 'package:guciano_flutter/utils/tokens.dart';
 
 import 'cart_page.dart';
 
@@ -32,7 +34,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    final fcm = FirebaseMessaging.instance;
+    LocalNotificationService.initialize(context);
+
+    FirebaseMessaging.onMessage.listen((message) {
+      LocalNotificationService.display(message);
+    });
+
+    // Get the token each time the application loads
+    // Save the initial token to the database
+    FirebaseMessaging.instance
+        .getToken()
+        .then((token) => saveTokenToDatabase(token!));
+
+    // Any time the token refreshes, store this in the database too.
+    FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
+
     super.initState();
   }
 
