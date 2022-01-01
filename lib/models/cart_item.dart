@@ -20,4 +20,14 @@ class CartItem {
     required this.count,
     required this.image,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'price': price * count,
+      'count': count,
+      'image': image,
+    };
+  }
 }

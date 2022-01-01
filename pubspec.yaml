@@ -41,6 +41,8 @@ dependencies:
   email_validator: ^2.0.1
   flutter_stripe_payment:
   firebase_messaging: ^11.2.4
+  flutter_local_notifications: ^9.2.0
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
