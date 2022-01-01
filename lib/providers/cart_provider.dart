@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:guciano_flutter/database/database.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 
@@ -35,62 +35,33 @@ class CartProvider with ChangeNotifier {
   late AppDatabase database;
   double totalPrice = 0;
 
-  Future<AppDatabase> getDatabase() async {
-    AppDatabase database =
+  Future<void> getDatabase() async {
+    database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-    return database;
   }
 
   CartProvider() {
-    getDatabase().then((value) {
-      database = value;
-      var c1 = CartItem(
-          id: "QB1YZpuLmaRyWB8QzOuU",
-          name: 'chicken crepe',
-          price: 30,
-          count: 3,
-          image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
-      var c2 = CartItem(
-          id: "QdklajfdhasnjkB1YZpuLmaRyWB8QzOuU",
-          name: 'chicken crepe',
-          price: 30,
-          count: 2,
-          image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
-      addItem(c1);
-      addItem(c2);
-    });
+    // getDatabase().then((value) {
+    //   database = value;
+    //   // var c1 = CartItem(
+    //   //     id: "QB1YZpuLmaRyWB8QzOuU",
+    //   //     name: 'chicken crepe',
+    //   //     price: 30,
+    //   //     count: 3,
+    //   //     image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
+    //   // var c2 = CartItem(
+    //   //     id: "QdklajfdhasnjkB1YZpuLmaRyWB8QzOuU",
+    //   //     name: 'chicken crepe',
+    //   //     price: 30,
+    //   //     count: 2,
+    //   //     image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
+    //   // addItem(c1);
+    //   // addItem(c2);
+    // });
   }
 
-  // Map<String, CartItem> cartItems = {
-  //   'QB1YZpuLmaRyWB8QzOuU': CartItem(
-  //       id: "QB1YZpuLmaRyWB8QzOuU",
-  //       name: 'chicken crepe',
-  //       price: 30,
-  //       count: 3,
-  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
-  //   'QB1Y5ZpuLmaRyWB165ddd8QzOuU': CartItem(
-  //       id: "QB1Y5ZpuLmaRyWB165ddd8QzOuU",
-  //       name: 'chicken crepe',
-  //       price: 30,
-  //       count: 6,
-  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
-  //   '44444QB1YZpuLdddmaRyWB8QzOuU': CartItem(
-  //       id: "44444QB1YZpuLdddmaRyWB8QzOuU",
-  //       name: 'chicken crepe',
-  //       price: 30,
-  //       count: 1,
-  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg")
-  // };
-
-  // cartItems['QB1YZpuLmaRyWB8QzOuU'] = CartItem(
-  //       id: "QB1YZpuLmaRyWB8QzOuU",
-  //       name: 'chicken crepe',
-  //       price: 30,
-  //       count: 3,
-  //       image:
-  //           "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
-
   Future<Map<String, CartItem>> getAllItems() async {
+    await getDatabase();
     final cartItemDao = database.cartItemDao;
 
     totalPrice = 0;

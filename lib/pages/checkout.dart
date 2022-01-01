@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/models/user_profile.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
+import 'package:guciano_flutter/pages/payment_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 import 'package:provider/provider.dart';
@@ -93,9 +94,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Card(
-                    elevation: 4.0,
-                    child: Text("Hussien add you payment here")),
+                Card(elevation: 4.0, child: PaymentPage()),
                 SizedBox(height: 20.0),
               ],
             ),
