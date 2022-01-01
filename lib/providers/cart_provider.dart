@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:guciano_flutter/database/database.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 
 class CartProvider with ChangeNotifier {
@@ -25,29 +26,62 @@ class CartProvider with ChangeNotifier {
   //       image:
   //           "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/1200px-A_small_cup_of_coffee.JPG")
   // ];
+  // Future<void> getDatabase() async {
+  //   database =
+  //       await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  // }
 
-  Map<String, CartItem> cartItems = {
-    'QB1YZpuLmaRyWB8QzOuU': CartItem(
-        id: "QB1YZpuLmaRyWB8QzOuU",
-        name: 'chicken crepe',
-        price: 30,
-        count: 3,
-        image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
-    'QB1YZpuLmaRyWBddd8QzOuU': CartItem(
-        id: "QB1YZpuLmaRyWBddd8QzOuU",
-        name: 'chicken crepe',
-        price: 30,
-        count: 6,
-        image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
-    'QB1YZpuLdddmaRyWB8QzOuU': CartItem(
-        id: "QB1YZpuLdddmaRyWB8QzOuU",
-        name: 'chicken crepe',
-        price: 30,
-        count: 1,
-        image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg")
-  };
+  Map<String, CartItem> cartItems = Map();
+  late AppDatabase database;
+  double totalPrice = 0;
 
-  double totalPrice = 10;
+  Future<AppDatabase> getDatabase() async {
+    AppDatabase database =
+        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    return database;
+  }
+
+  CartProvider() {
+    getDatabase().then((value) {
+      database = value;
+      var c1 = CartItem(
+          id: "QB1YZpuLmaRyWB8QzOuU",
+          name: 'chicken crepe',
+          price: 30,
+          count: 3,
+          image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
+      var c2 = CartItem(
+          id: "QdklajfdhasnjkB1YZpuLmaRyWB8QzOuU",
+          name: 'chicken crepe',
+          price: 30,
+          count: 2,
+          image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
+      addItem(c1);
+      addItem(c2);
+    });
+  }
+
+  // Map<String, CartItem> cartItems = {
+  //   'QB1YZpuLmaRyWB8QzOuU': CartItem(
+  //       id: "QB1YZpuLmaRyWB8QzOuU",
+  //       name: 'chicken crepe',
+  //       price: 30,
+  //       count: 3,
+  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
+  //   'QB1Y5ZpuLmaRyWB165ddd8QzOuU': CartItem(
+  //       id: "QB1Y5ZpuLmaRyWB165ddd8QzOuU",
+  //       name: 'chicken crepe',
+  //       price: 30,
+  //       count: 6,
+  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg"),
+  //   '44444QB1YZpuLdddmaRyWB8QzOuU': CartItem(
+  //       id: "44444QB1YZpuLdddmaRyWB8QzOuU",
+  //       name: 'chicken crepe',
+  //       price: 30,
+  //       count: 1,
+  //       image: "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg")
+  // };
+
   // cartItems['QB1YZpuLmaRyWB8QzOuU'] = CartItem(
   //       id: "QB1YZpuLmaRyWB8QzOuU",
   //       name: 'chicken crepe',
@@ -55,35 +89,61 @@ class CartProvider with ChangeNotifier {
   //       count: 3,
   //       image:
   //           "https://storage.googleapis.com/bites-v1/7kcw67sr4.jpeg");
-  void addItem(CartItem cartItem) {
-    cartItems[cartItem.id] = cartItem;
-    totalPrice += cartItem.price;
-    notifyListeners();
-  }
 
-  Map<String, CartItem> getAllItems() {
+  Future<Map<String, CartItem>> getAllItems() async {
+    final cartItemDao = database.cartItemDao;
+
+    totalPrice = 0;
+    Map<String, CartItem> ret = new Map();
+    List<CartItem> arr = await cartItemDao.findAllItems();
+    for (var cartItem in arr) {
+      ret[cartItem.id] = cartItem;
+      totalPrice += cartItem.price * cartItem.count;
+    }
+    notifyListeners();
+    // cartItems = ret;
     return cartItems;
   }
 
-  void removeItem(id) {
+  Future<void> addItem(CartItem cartItem) async {
+    cartItems[cartItem.id] = cartItem;
+    totalPrice += cartItem.price;
+    final cartItemDao = database.cartItemDao;
+    await cartItemDao.insertItem(cartItem);
+    notifyListeners();
+  }
+
+  Future<void> removeItem(id) async {
+    CartItem? cartItem = cartItems[id];
+    final cartItemDao = database.cartItemDao;
+    await cartItemDao.deleteItem(cartItem!);
     cartItems.remove(id);
     totalPrice -= cartItems[id]!.count * cartItems[id]!.price;
+
     notifyListeners();
   }
 
-  void incItem(id) {
+  Future<void> incItem(id) async {
     cartItems[id]!.count++;
     totalPrice += cartItems[id]!.price;
-    print(id);
+
+    CartItem? cartItem = cartItems[id];
+    final cartItemDao = database.cartItemDao;
+    await cartItemDao.updateItem(cartItem!);
     notifyListeners();
   }
 
-  void decItem(id) {
-    if (cartItems[id]!.count == 1)
+  Future<void> decItem(id) async {
+    print(id);
+    if (cartItems[id]!.count == 1) {
       removeItem(id);
-    else
+    } else {
+      totalPrice -= cartItems[id]!.price;
       cartItems[id]!.count--;
-    totalPrice -= cartItems[id]!.price;
+      CartItem? cartItem = cartItems[id];
+      final cartItemDao = database.cartItemDao;
+      await cartItemDao.updateItem(cartItem!);
+    }
     notifyListeners();
   }
 

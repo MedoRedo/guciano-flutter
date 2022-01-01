@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
 
+import 'database/database.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
   MyApp({required this.auth});
 
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
