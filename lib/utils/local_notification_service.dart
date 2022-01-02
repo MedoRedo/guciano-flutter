@@ -3,41 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationService {
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  static final _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  static void initialize(BuildContext context) {
-    final InitializationSettings initializationSettings =
+  static Future<void> initialize(BuildContext context) async {
+    const InitializationSettings initializationSettings =
         InitializationSettings(
             android: AndroidInitializationSettings("@mipmap/ic_launcher"));
 
-    _notificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? route) async {
-      if (route != null) {
-        Navigator.of(context).pushNamed(route);
-      }
-    });
+    await _notificationsPlugin.initialize(initializationSettings);
   }
 
-  static void display(RemoteMessage message) async {
+  static Future<void> display(RemoteMessage message) async {
     try {
-      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-      final NotificationDetails notificationDetails = NotificationDetails(
+      const NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
         "guciano",
         "guciano channel",
         channelDescription: "this is our channel",
         importance: Importance.max,
         priority: Priority.high,
+        playSound: true,
       ));
 
       await _notificationsPlugin.show(
-        id,
+        0,
         message.notification!.title,
         message.notification!.body,
         notificationDetails,
-        payload: message.data["route"],
       );
     } on Exception catch (e) {
       print(e);
