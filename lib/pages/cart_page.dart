@@ -3,6 +3,7 @@ import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/pages/checkout.dart';
 import 'package:guciano_flutter/pages/empty_cart_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
+import 'package:guciano_flutter/providers/home_page_provider.dart';
 import 'package:guciano_flutter/widgets/loading_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -139,7 +140,7 @@ class _CartPageState extends State<CartPage> {
     Size size = MediaQuery.of(context).size;
     CartProvider cartProvider = Provider.of<CartProvider>(context);
     var cartItems = cartProvider.getAllItems();
-
+    final provider = Provider.of<HomePageProvider>(context);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 130),
@@ -175,7 +176,7 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(HomePage.tag);
+                provider.chooseTap(0);
               },
             ),
           ),

@@ -20,7 +20,7 @@ class AuthRepo {
     }
   }
 
-  Future signOut() {
-    return firebaseAuth.signOut();
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
   }
 }

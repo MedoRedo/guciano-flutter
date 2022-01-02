@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
+import 'package:guciano_flutter/providers/home_page_provider.dart';
 import 'package:guciano_flutter/routes.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +33,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => CartProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => CartProvider()),
+        ChangeNotifierProvider(create: (ctx) => HomePageProvider()),
+      ],
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());

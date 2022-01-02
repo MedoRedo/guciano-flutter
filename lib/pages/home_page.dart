@@ -4,8 +4,10 @@ import 'package:guciano_flutter/models/navigation_page.dart';
 import 'package:guciano_flutter/pages/menu_page.dart';
 import 'package:guciano_flutter/pages/prev_orders_page.dart';
 import 'package:guciano_flutter/pages/profile_page.dart';
+import 'package:guciano_flutter/providers/home_page_provider.dart';
 import 'package:guciano_flutter/utils/local_notification_service.dart';
 import 'package:guciano_flutter/utils/tokens.dart';
+import 'package:provider/provider.dart';
 
 import 'cart_page.dart';
 
@@ -17,14 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   static final List<NavigationPage> navigationPages = [
     NavigationPage(title: 'Guciano', widget: MenuPage()),
     NavigationPage(title: 'My Orders', widget: PrevOrdersPage()),
@@ -54,6 +48,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<HomePageProvider>(context);
+    int _selectedIndex = provider.selectedIndex;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.1,
@@ -81,7 +77,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: provider.chooseTap,
         selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
