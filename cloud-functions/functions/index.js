@@ -114,15 +114,17 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
       await orderRef.update({
         order_status: 'delivering'
       }).then(value => {
-        // TODO: Send a notification to the user.
+        var payload = {notification: {title: 'Ready', body: 'Your order is ready and on its way now'}}
+        admin.messaging().sendToDevice(tokens, payload)
       });
 
       setTimeout(async function () {
         await orderRef.update({
           order_status: 'done'
         }).then(value => {
-          // TODO: Send a notification to the user.
-        });
+          var payload = {notification: {title: 'Enjoy your meal', body: 'Your order has been successfully delivered'}}
+          admin.messaging().sendToDevice(tokens, payload)
+          });
       }, 10000);
     }, 10000);
   }
