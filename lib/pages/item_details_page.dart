@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
+import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
 import 'package:provider/provider.dart';
+
+import 'checkout.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   static String tag = "item-page";
@@ -112,7 +115,6 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton.icon(
               onPressed: () {
-                // Ahmed add to the cart
                 CartItem cartItem = CartItem(
                     id: widget.id,
                     name: widget.name,
@@ -120,9 +122,17 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     count: count,
                     image: widget.imageUrl);
                 cartProvider.addItem(cartItem);
+
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Item added to Cart"),
+                ));
+                Navigator.of(context).pushNamed(HomePage.tag);
               },
+
+              // Ahmed add to the cart
+              // add to provider here
               icon: Icon(Icons.shopping_cart),
-              label: Text('Add to Cart'),
+              label: const Text('Add to Cart'),
             ),
           )
         ],
