@@ -13,5 +13,4 @@ final routes = <String, WidgetBuilder>{
   PrevOrdersPage.tag: (context) => PrevOrdersPage(),
   PaymentPage.tag: (context) => PaymentPage(),
   CartPage.tag: (context) => CartPage(),
-  CheckoutPage.tag: (context) => CheckoutPage(),
 };

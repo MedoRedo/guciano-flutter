@@ -28,7 +28,18 @@ class MyApp extends StatelessWidget {
   final bool auth;
 
   MyApp({required this.auth});
+  void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
 
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        runApp(MyApp(auth: false));
+      } else {
+        runApp(MyApp(auth: true));
+      }
+    });
+  }
   // This widget is the root of your application.
 
   @override

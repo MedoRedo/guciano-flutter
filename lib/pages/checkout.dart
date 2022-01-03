@@ -9,8 +9,8 @@ import 'package:provider/provider.dart';
 
 class CheckoutPage extends StatefulWidget {
   static String tag = 'checkout-page';
-
-  const CheckoutPage({Key? key}) : super(key: key);
+  final double totalPrice;
+  const CheckoutPage({Key? key, required this.totalPrice}) : super(key: key);
 
   @override
   State<CheckoutPage> createState() => _CheckoutPageState();
@@ -19,7 +19,6 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   late final authRepo;
   late final userRepo;
-
   late Future<UserProfile> data;
 
   @override
@@ -32,6 +31,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   void placeOrder() {
     // place order here ....
     CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     var cartItems = cartProvider.getAllItems();
 
     Navigator.of(context).pushNamed(HomePage.tag);
@@ -40,8 +40,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    CartProvider cartProvider = Provider.of<CartProvider>(context);
-
     return FutureBuilder<UserProfile>(
       future: data,
       builder: (context, snapshot) {
@@ -164,7 +162,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               ),
                             ),
                             Text(
-                              cartProvider.totalPrice.toString(),
+                              widget.totalPrice.toString(),
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w900,

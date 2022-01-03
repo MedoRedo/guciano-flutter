@@ -126,7 +126,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text("Item added to Cart"),
                 ));
-                Navigator.of(context).pushNamed(HomePage.tag);
+                Navigator.of(context).pop();
               },
 
               // Ahmed add to the cart

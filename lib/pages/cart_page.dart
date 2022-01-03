@@ -139,7 +139,6 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     CartProvider cartProvider = Provider.of<CartProvider>(context);
-    var cartItems = cartProvider.getAllItems();
     final provider = Provider.of<HomePageProvider>(context);
     return Scaffold(
       body: Padding(
@@ -194,8 +193,9 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed(CheckoutPage.tag);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        CheckoutPage(totalPrice: cartProvider.totalPrice)));
               },
             ),
           ),
