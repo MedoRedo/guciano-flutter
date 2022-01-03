@@ -39,7 +39,7 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
   }
 
   // Initialize order number.
-  const orderNumber = userDoc.data()['last_order_number'];
+  var orderNumber = userDoc.data()['last_order_number'];
 
   if (orderNumber == null) {
     orderNumber = 1;
@@ -97,7 +97,7 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
     last_order_number: orderNumber
   });
 
-  const tokens = userDoc.tokens;
+  const tokens = userDoc.data().tokens;
 
   // Update order status after some time.
   if (order.delivery_option == 'kiosk') {
