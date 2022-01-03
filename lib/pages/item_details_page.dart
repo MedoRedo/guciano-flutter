@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
+import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   static String tag = "item-page";
@@ -26,7 +28,7 @@ class ItemDetailsPage extends StatefulWidget {
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
-  int count = 0;
+  int count = 1;
   void increment() {
     setState(() {
       count++;
@@ -35,12 +37,13 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   void decrement() {
     setState(() {
-      if (count > 0) count--;
+      if (count > 1) count--;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,6 +118,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     price: widget.price,
                     count: count,
                     image: widget.imageUrl);
+                cartProvider.addItem(cartItem);
               },
               icon: Icon(Icons.shopping_cart),
               label: Text('Add to Cart'),

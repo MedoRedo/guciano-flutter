@@ -77,22 +77,40 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> addItem(CartItem cartItem) async {
-    cartItems[cartItem.id] = cartItem;
-    totalPrice += cartItem.price;
-    final cartItemDao = database.cartItemDao;
-    await cartItemDao.insertItem(cartItem);
+    String id = cartItem.id;
+    if (cartItems[id] != null) {
+      cartItem.count = cartItem.count + cartItems[id]!.count;
+      await removeItem(id);
+      await addItem(cartItem);
+    } else {
+      cartItems[cartItem.id] = cartItem;
+      totalPrice += cartItem.price * cartItem.count;
+      final cartItemDao = database.cartItemDao;
+      await cartItemDao.insertItem(cartItem);
+    }
     notifyListeners();
   }
 
   Future<void> removeItem(id) async {
     CartItem? cartItem = cartItems[id];
-    final cartItemDao = database.cartItemDao;
-    await cartItemDao.deleteItem(cartItem!);
     cartItems.remove(id);
     totalPrice -= cartItems[id]!.count * cartItems[id]!.price;
+    final cartItemDao = database.cartItemDao;
+    await cartItemDao.deleteItem(cartItem!);
 
     notifyListeners();
   }
+
+  // Future<void> updateItem(cartItem) async {
+  //   String id = cartItem.id;
+  //   cartItems[id] = id;
+  //   totalPrice += cartItems[id]!.price;
+
+  //   CartItem? cartItem = cartItems[id];
+  //   final cartItemDao = database.cartItemDao;
+  //   await cartItemDao.updateItem(cartItem!);
+  //   notifyListeners();
+  // }
 
   Future<void> incItem(id) async {
     cartItems[id]!.count++;
@@ -105,9 +123,8 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> decItem(id) async {
-    print(id);
     if (cartItems[id]!.count == 1) {
-      removeItem(id);
+      await removeItem(id);
     } else {
       totalPrice -= cartItems[id]!.price;
       cartItems[id]!.count--;

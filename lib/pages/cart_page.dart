@@ -143,10 +143,9 @@ class _CartPageState extends State<CartPage> {
     final provider = Provider.of<HomePageProvider>(context);
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 130),
+        padding: EdgeInsets.fromLTRB(10.0, 0, 10.0, 10),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 20.0),
             Text(
               "Items",
               style: TextStyle(
