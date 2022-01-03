@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/category.dart';
 import 'package:guciano_flutter/models/product_item.dart';
@@ -6,6 +8,7 @@ import 'package:guciano_flutter/widgets/loading_screen.dart';
 
 import '../widgets/category_widget.dart';
 import '../widgets/product_widget.dart';
+import 'item_details_page.dart';
 
 class MenuPage extends StatefulWidget {
   // final List<Category> catList;
@@ -67,7 +70,10 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               ),
               Expanded(
-                  child: ListView.builder(
+                  child: ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return Divider();
+                      },
                       clipBehavior: Clip.none,
                       scrollDirection: Axis.horizontal,
                       itemCount: cat.length,
@@ -100,14 +106,15 @@ class _MenuPageState extends State<MenuPage> {
                     }
 
                     if (snapshot.connectionState == ConnectionState.done) {
-                      return ListView.builder(
+                      return ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return Divider();
+                          },
                           itemCount: items.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return InkWell(
-                                onTap: () {},
-                                child: ProductWidget(
-                                  item: items[index],
-                                ));
+                            return ProductWidget(
+                              item: items[index],
+                            );
                           });
                     }
 

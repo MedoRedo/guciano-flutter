@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
 
 class ItemDetailsPage extends StatefulWidget {
+  static String tag = "item-page";
   final String name;
   final String imageUrl;
   final double price;
   final double rating;
   final String description;
+  final String id;
 
   const ItemDetailsPage({
     Key? key,
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.price,
@@ -46,12 +50,14 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             color: Colors.black38,
             colorBlendMode: BlendMode.darken,
             fit: BoxFit.cover,
+            height: 350,
+            width: double.infinity,
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
               widget.name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -69,7 +75,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
               ),
               Text(
                 widget.rating.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),
@@ -85,7 +91,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     count: count, increment: increment, decrement: decrement),
                 Text(
                   'L.E. ${widget.price}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w700,
                   ),
@@ -101,7 +107,15 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             width: double.infinity,
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                // Ahmed add to the cart
+                CartItem cartItem = CartItem(
+                    id: widget.id,
+                    name: widget.name,
+                    price: widget.price,
+                    count: count,
+                    image: widget.imageUrl);
+              },
               icon: Icon(Icons.shopping_cart),
               label: Text('Add to Cart'),
             ),
