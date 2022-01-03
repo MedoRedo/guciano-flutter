@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
       ],
       child: GestureDetector(
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: MaterialApp(
-          title: 'Login',
+          title: 'Guciano',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.lightBlue,

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:guciano_flutter/utils/tokens.dart';
 
 class AuthRepo {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -21,6 +22,8 @@ class AuthRepo {
   }
 
   Future<void> signOut() async {
+    final userId = firebaseAuth.currentUser!.uid;
+    await removeTokenFromDatabase(userId);
     await firebaseAuth.signOut();
   }
 }

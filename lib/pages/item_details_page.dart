@@ -93,10 +93,11 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 Counter(
                     count: count, increment: increment, decrement: decrement),
                 Text(
-                  'L.E. ${widget.price}',
+                  '${widget.price} EGP',
                   style: const TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w700,
+                    color: Color(0xFF19A15E),
                   ),
                 ),
               ],
