@@ -39,7 +39,7 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
   }
 
   // Initialize order number.
-  const orderNumber = userDoc.data()['last_order_number'];
+  var orderNumber = userDoc.data()['last_order_number'];
 
   if (orderNumber == null) {
     orderNumber = 1;
@@ -97,7 +97,7 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
     last_order_number: orderNumber
   });
 
-  const tokens = userDoc.tokens;
+  const tokens = userDoc.data().tokens;
 
   // Update order status after some time.
   if (order.delivery_option == 'kiosk') {
@@ -114,15 +114,17 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
       await orderRef.update({
         order_status: 'delivering'
       }).then(value => {
-        // TODO: Send a notification to the user.
+        var payload = {notification: {title: 'Ready', body: 'Your order is ready and on its way now'}}
+        admin.messaging().sendToDevice(tokens, payload)
       });
 
       setTimeout(async function () {
         await orderRef.update({
           order_status: 'done'
         }).then(value => {
-          // TODO: Send a notification to the user.
-        });
+          var payload = {notification: {title: 'Enjoy your meal', body: 'Your order has been successfully delivered'}}
+          admin.messaging().sendToDevice(tokens, payload)
+          });
       }, 10000);
     }, 10000);
   }
