@@ -220,10 +220,18 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                                               child: FadeInImage(
                                                 width: 50,
                                                 height: 50,
-                                                placeholder: const AssetImage(
-                                                    Images.placeholderImage),
                                                 image: NetworkImage(
                                                     orderItem.imgUrl),
+                                                placeholder: const AssetImage(
+                                                    Images.placeholderImage),
+                                                imageErrorBuilder: (context,
+                                                    exception, stackTrace) {
+                                                  return Image.asset(
+                                                    Images.placeholderImage,
+                                                    width: 50,
+                                                    height: 50,
+                                                  );
+                                                },
                                                 fit: BoxFit.cover,
                                               ),
                                             ),

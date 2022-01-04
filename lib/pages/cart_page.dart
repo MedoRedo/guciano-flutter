@@ -66,9 +66,16 @@ class _CartPageState extends State<CartPage> {
                         child: FadeInImage(
                           width: 50,
                           height: 50,
+                          image: NetworkImage(cartItem!.image),
                           placeholder:
                               const AssetImage(Images.placeholderImage),
-                          image: NetworkImage(cartItem!.image),
+                          imageErrorBuilder: (context, exception, stackTrace) {
+                            return Image.asset(
+                              Images.placeholderImage,
+                              width: 50,
+                              height: 50,
+                            );
+                          },
                           fit: BoxFit.cover,
                         ),
                       ),

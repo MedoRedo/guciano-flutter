@@ -57,8 +57,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: FadeInImage(
                   width: 140,
                   height: 140,
-                  placeholder: const AssetImage(Images.placeholderImage),
                   image: NetworkImage(user.image),
+                  placeholder: const AssetImage(Images.placeholderImage),
+                  imageErrorBuilder: (context, exception, stackTrace) {
+                    return Image.asset(
+                      Images.placeholderImage,
+                      width: 140,
+                      height: 140,
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
               ),

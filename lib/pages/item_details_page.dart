@@ -51,8 +51,14 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       FadeInImage(
         width: double.infinity,
         height: 350,
-        placeholder: const AssetImage(Images.placeholderImage),
         image: NetworkImage(widget.imageUrl),
+        placeholder: const AssetImage(Images.placeholderImage),
+        imageErrorBuilder: (context, exception, stackTrace) {
+          return Image.asset(
+            Images.placeholderImage,
+            height: 350,
+          );
+        },
         fit: BoxFit.cover,
       ),
       Padding(

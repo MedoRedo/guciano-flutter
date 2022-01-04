@@ -42,8 +42,15 @@ class _CategoryWidgetState extends State<CategoryWidget>
                 child: FadeInImage(
                   width: 70,
                   height: 70,
-                  placeholder: const AssetImage(Images.placeholderImage),
                   image: NetworkImage(cat.imgPath),
+                  placeholder: const AssetImage(Images.placeholderImage),
+                  imageErrorBuilder: (context, exception, stackTrace) {
+                    return Image.asset(
+                      Images.placeholderImage,
+                      width: 50,
+                      height: 50,
+                    );
+                  },
                   fit: BoxFit.cover,
                 ),
               ),
