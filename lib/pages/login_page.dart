@@ -8,8 +8,10 @@ import 'home_page.dart';
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
 
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
-  _LoginPageState createState() => new _LoginPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -17,8 +19,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   String _errorMessage = '';
 
@@ -57,10 +59,10 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final errorMessage = Padding(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Text(
         _errorMessage,
-        style: TextStyle(fontSize: 14.0, color: Colors.red),
+        style: const TextStyle(fontSize: 14.0, color: Colors.red),
         textAlign: TextAlign.center,
       ),
     );
@@ -80,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
       controller: emailController,
       decoration: InputDecoration(
         hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
       textInputAction: TextInputAction.next,
@@ -103,13 +105,13 @@ class _LoginPageState extends State<LoginPage> {
       },
       decoration: InputDecoration(
         hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        contentPadding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
     final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
@@ -131,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                 .catchError((error) => {processError(error)});
           }
         },
-        child: Text('Log In', style: TextStyle(color: Colors.white)),
+        child: const Text('Log In', style: TextStyle(color: Colors.white)),
       ),
     );
 
@@ -142,16 +144,16 @@ class _LoginPageState extends State<LoginPage> {
             key: _formKey,
             child: ListView(
               shrinkWrap: true,
-              padding: EdgeInsets.only(left: 24.0, right: 24.0),
-              children: <Widget>[
+              padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+              children: [
                 logo,
-                SizedBox(height: 24.0),
+                const SizedBox(height: 24.0),
                 errorMessage,
-                SizedBox(height: 12.0),
+                const SizedBox(height: 12.0),
                 email,
-                SizedBox(height: 8.0),
+                const SizedBox(height: 8.0),
                 password,
-                SizedBox(height: 24.0),
+                const SizedBox(height: 24.0),
                 loginButton,
               ],
             ),
