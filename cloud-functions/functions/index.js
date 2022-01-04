@@ -96,7 +96,8 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
 
   // Update last order number.
   await userRef.update({
-    last_order_number: orderNumber
+    last_order_number: orderNumber,
+    available_balance: admin.firestore.FieldValue.increment(-order.used_balance)
   });
 
   const tokens = userDoc.data().tokens;

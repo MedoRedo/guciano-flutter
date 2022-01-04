@@ -46,12 +46,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
     homeProvider = Provider.of<HomePageProvider>(context);
   }
 
-  void proceedWithOrder(Delivery delivery, Payment payment) async {
+  void proceedWithOrder(
+      Delivery delivery, Payment payment, num usedBalance) async {
     if (payment == Payment.cash) {
-      placeOrder(delivery, payment);
+      placeOrder(delivery, payment, usedBalance);
     } else {
       if (_card?.complete == true) {
-        payViaCard(context, delivery, payment);
+        payViaCard(context, delivery, payment, usedBalance);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Please enter missing card details."),
@@ -80,7 +81,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  void placeOrder(Delivery delivery, Payment payment) async {
+  void placeOrder(Delivery delivery, Payment payment, num usedBalance) async {
     var cartItems = await cartProvider.getAllItems();
     if (kDebugMode) {
       print(cartItems);
@@ -91,7 +92,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
 
     userRepo
-        .placeOrder(cartItemsList, _deliveryMethod!, _paymentMethod!)
+        .placeOrder(
+            cartItemsList, _deliveryMethod!, _paymentMethod!, usedBalance)
         .then((value) async {
       if (value == 200) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -116,14 +118,24 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
   }
 
-  payViaCard(BuildContext context, Delivery delivery, Payment payment) async {
+  payViaCard(BuildContext context, Delivery delivery, Payment payment,
+      num usedBalance) async {
     // TODO: Pay via card.
 
     // Place the order on success.
-    placeOrder(delivery, payment);
+    placeOrder(delivery, payment, usedBalance);
   }
 
   Widget getPaymentSummary(UserProfile user) {
+    num subtotal = cartProvider.totalPrice;
+    num deliveryFees = _deliveryMethod == Delivery.dorm ? 20 : 0;
+    num totalPrice = subtotal + deliveryFees;
+
+    num usedBalance = (user.availableBalance <= totalPrice)
+        ? user.availableBalance
+        : totalPrice;
+    totalPrice -= usedBalance;
+
     return ClipRRect(
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32.0), topRight: Radius.circular(32.0)),
@@ -178,13 +190,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         ),
                       ),
                       Text(
-                        _deliveryMethod == Delivery.dorm
-                            ? (cartProvider.totalPrice +
-                                    20 -
-                                    user.availableBalance)
-                                .toString()
-                            : (cartProvider.totalPrice - user.availableBalance)
-                                .toString(),
+                        totalPrice.toString(),
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w900,
@@ -209,7 +215,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     onPressed: () {
-                      proceedWithOrder(_deliveryMethod!, _paymentMethod!);
+                      proceedWithOrder(
+                          _deliveryMethod!, _paymentMethod!, usedBalance);
                     },
                   ),
                 ],
