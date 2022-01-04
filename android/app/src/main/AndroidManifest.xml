@@ -2,7 +2,7 @@
     package="com.example.guciano_flutter">
    <application
         android:name="${applicationName}"
-        android:label="guciano_flutter"
+        android:label="Guciano"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
