@@ -3,6 +3,7 @@ import 'package:guciano_flutter/models/user_profile.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
 import 'package:guciano_flutter/repositories/auth_repo.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
+import 'package:guciano_flutter/utils/images.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -48,19 +49,17 @@ class _ProfilePageState extends State<ProfilePage> {
         _balanceTextController.text = user.availableBalance.toString();
 
         return ListView(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             Center(
-              child: Container(
-                height: 140.0,
-                width: 140.0,
-                margin: const EdgeInsets.symmetric(vertical: 16.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: NetworkImage(user.image),
-                    fit: BoxFit.cover,
-                  ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(70),
+                child: FadeInImage(
+                  width: 140,
+                  height: 140,
+                  placeholder: const AssetImage(Images.placeholderImage),
+                  image: NetworkImage(user.image),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
