@@ -8,6 +8,7 @@ class CartProvider with ChangeNotifier {
   double _totalPrice = 0;
 
   double get totalPrice => _totalPrice;
+
   Future<void> getDatabase() async {
     database =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
@@ -89,8 +90,8 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> getUserProfile() async {
-  //   user = await _userRepo.getUserProfile();
-  //   notifyListeners();
-  // }
+// Future<void> getUserProfile() async {
+//   user = await _userRepo.getUserProfile();
+//   notifyListeners();
+// }
 }

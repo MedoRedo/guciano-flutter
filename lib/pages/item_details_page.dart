@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
-import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'checkout.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   static String tag = "item-page";
@@ -32,6 +29,7 @@ class ItemDetailsPage extends StatefulWidget {
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
   int count = 1;
+
   void increment() {
     setState(() {
       count++;

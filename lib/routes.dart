@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:guciano_flutter/pages/cart_page.dart';
-import 'package:guciano_flutter/pages/checkout.dart';
-
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
 import 'package:guciano_flutter/pages/payment_page.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/models/user_profile.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/payment_page.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 class CheckoutPage extends StatefulWidget {
   static String tag = 'checkout-page';
   final double totalPrice;
+
   const CheckoutPage({Key? key, required this.totalPrice}) : super(key: key);
 
   @override

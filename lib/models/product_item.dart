@@ -4,6 +4,7 @@ class ProductItem {
   int price;
   String itemId;
   String rating;
+
   ProductItem(
       {required this.imgPath,
       required this.name,

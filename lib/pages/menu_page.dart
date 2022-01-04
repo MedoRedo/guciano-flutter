@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/category.dart';
@@ -8,7 +7,6 @@ import 'package:guciano_flutter/widgets/loading_screen.dart';
 
 import '../widgets/category_widget.dart';
 import '../widgets/product_widget.dart';
-import 'item_details_page.dart';
 
 class MenuPage extends StatefulWidget {
   // final List<Category> catList;

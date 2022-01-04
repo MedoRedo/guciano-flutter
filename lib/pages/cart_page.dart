@@ -4,10 +4,7 @@ import 'package:guciano_flutter/pages/checkout.dart';
 import 'package:guciano_flutter/pages/empty_cart_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/providers/home_page_provider.dart';
-import 'package:guciano_flutter/widgets/loading_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'home_page.dart';
 
 class CartPage extends StatefulWidget {
   static String tag = 'cart-page';
@@ -205,24 +202,6 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 //         Container(
 //           height: size.height * 0.20 * cartItems.length,
 //           color: Colors.white,
