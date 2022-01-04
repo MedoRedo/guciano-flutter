@@ -114,14 +114,13 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
           } else {
             var orders = snapshot.data!.toList();
             orders.sort((order1, order2) =>
-                order1.timeStamp.compareTo(order2.timeStamp));
+                order2.timeStamp.compareTo(order1.timeStamp));
 
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListView.builder(
                 itemCount: snapshot.data!.length,
                 scrollDirection: Axis.vertical,
-                reverse: true,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   Order order = orders[index];
