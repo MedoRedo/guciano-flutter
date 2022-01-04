@@ -99,7 +99,7 @@ class _MenuPageState extends State<MenuPage> {
             Expanded(
               flex: 4,
               child: FutureBuilder<List<ProductItem>>(
-                future: CategoriesRepo().getCategoryItems(currCat.categoryId),
+                future: categoriesRepo.getCategoryItems(currCat.categoryId),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<ProductItem>> snapshot) {
                   if (snapshot.hasError) {

@@ -15,8 +15,7 @@ class Counter extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+      children: [
         SizedBox(
             width: 40,
             child: TextButton(
