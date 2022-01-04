@@ -63,15 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Account Information',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-            ),
             Card(
-              elevation: 10.0,
+              margin: const EdgeInsets.only(top: 16),
+              elevation: 8.0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
               child: Container(
