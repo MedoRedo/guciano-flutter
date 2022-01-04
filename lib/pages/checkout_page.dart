@@ -46,12 +46,41 @@ class _CheckoutPageState extends State<CheckoutPage> {
     homeProvider = Provider.of<HomePageProvider>(context);
   }
 
-  void placeOrder(Delivery delivery, Payment payment) async {
-    // place order here ....
-    final paymentMethod = await Stripe.instance
-        .createPaymentMethod(const PaymentMethodParams.card());
-    // stripe.Stripe.instance.confirmPayment(paymentIntentClientSecret, data)
+  void proceedWithOrder(Delivery delivery, Payment payment) async {
+    if (payment == Payment.cash) {
+      placeOrder(delivery, payment);
+    } else {
+      if (_card?.complete == true) {
+        payViaCard(context, delivery, payment);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Please enter missing card details."),
+        ));
+        return;
+      }
+    }
 
+    AlertDialog alert = AlertDialog(
+      content: Row(
+        children: [
+          const CircularProgressIndicator(),
+          Container(
+              margin: const EdgeInsets.only(left: 16),
+              child: const Text("Payment under process")),
+        ],
+      ),
+    );
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void placeOrder(Delivery delivery, Payment payment) async {
     var cartItems = await cartProvider.getAllItems();
     if (kDebugMode) {
       print(cartItems);
@@ -63,25 +92,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     userRepo
         .placeOrder(cartItemsList, _deliveryMethod!, _paymentMethod!)
-        .then((value) {
-      // Go to previous orders page.
-      homeProvider.selectTab(2);
-      Navigator.pop(context);
+        .then((value) async {
+      if (value == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Created order successfully."),
+        ));
+
+        await cartProvider.deleteAllItems();
+
+        // Go to previous orders page.
+        homeProvider.selectTab(1);
+        // Navigator.popUntil(context, ModalRoute.withName(HomePage.tag));
+        Navigator.pop(context);
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Failed to create order. Please try again."),
+        ));
+
+        // Close the progress dialog.
+        Navigator.pop(context);
+      }
     });
   }
 
-  // payViaNewCard(BuildContext context) async {
-  //   CartProvider cartProvider = Provider.of<CartProvider>(context, listen: false);
-  //   // ProgressDialog dialog = new ProgressDialog(context);
-  //   // dialog.style(message: 'Please wait...');
-  //   // await dialog.show();
-  //   var response = await StripeService.payWithNewCard(amount: cartProvider.totalPrice.toString(), currency: 'USD');
-  //   // await dialog.hide();
-  //   Scaffold.of(context).showSnackBar(SnackBar(
-  //     content: Text(response.message),
-  //     duration: new Duration(milliseconds: response.success == true ? 1200 : 3000),
-  //   ));
-  // }
+  payViaCard(BuildContext context, Delivery delivery, Payment payment) async {
+    // TODO: Pay via card.
+
+    // Place the order on success.
+    placeOrder(delivery, payment);
+  }
 
   Widget getPaymentSummary(UserProfile user) {
     return ClipRRect(
@@ -161,6 +201,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ],
                   ),
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.green),
                     child: const Text(
                       "Place Order",
                       style: TextStyle(
@@ -168,7 +209,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     onPressed: () {
-                      placeOrder(_deliveryMethod!, _paymentMethod!);
+                      proceedWithOrder(_deliveryMethod!, _paymentMethod!);
                     },
                   ),
                 ],
@@ -294,19 +335,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       });
                     },
                   ),
+                  Visibility(
+                      visible: _paymentMethod == Payment.creditCard,
+                      child: CardField(onCardChanged: (card) {
+                        _card = card;
+                      })),
                   const SizedBox(height: 16.0),
-                  _paymentMethod == Payment.creditCard
-                      ? Column(
-                          children: [
-                            CardField(onCardChanged: (card) {
-                              if (kDebugMode) {
-                                print(card);
-                              }
-                            }),
-                            const SizedBox(height: 16.0),
-                          ],
-                        )
-                      : const SizedBox.shrink(),
                   Text(
                     user.name,
                     style: const TextStyle(

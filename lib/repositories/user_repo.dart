@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
@@ -56,20 +59,30 @@ class UserRepo {
     return items;
   }
 
-  Future<void> placeOrder(List<CartItem> items, Delivery deliveryOption,
+  Future<int> placeOrder(List<CartItem> items, Delivery deliveryOption,
       Payment paymentOption) async {
     var order = {
       'delivery_option': deliveryOption == Delivery.dorm ? 'dorm' : 'kiosk',
       'payment_option': paymentOption == Payment.cash ? 'cash' : 'credit_card',
-      'items': items.map((item) => item.toJson()).toList(),
+      'items': items,
     };
+
     Uri url = Uri.parse(
         'https://us-central1-guciano-42a33.cloudfunctions.net/createOrder');
-    http.Response response = await http.post(url, body: {
-      'userId': currentUser.uid,
-      'order': order,
-    });
+    http.Response response = await http.post(url,
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode(
+          <String, dynamic>{
+            'userId': currentUser.uid,
+            'order': order,
+          },
+        ));
 
-    print(response.statusCode);
+    if (kDebugMode) {
+      print("Order status: ${response.statusCode}");
+      print("createOrder response body: ${response.body}");
+    }
+
+    return response.statusCode;
   }
 }

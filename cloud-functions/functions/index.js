@@ -16,6 +16,8 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
 
   // Get request query.
   const body = request.body;
+  functions.logger.debug(`Request body: ${JSON.stringify(body)}.`);
+
   const userId = body.userId;
   const order = body.order;
 
