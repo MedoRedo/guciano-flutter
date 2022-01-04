@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
+import 'package:guciano_flutter/utils/images.dart';
 
 class PrevOrdersPage extends StatefulWidget {
   static String tag = 'prev-orders-page';
@@ -207,18 +208,28 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                                         OrderItem orderItem =
                                             snapshot.data![index];
                                         return Padding(
-                                          padding: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
                                           child: ListTile(
-                                            leading: CircleAvatar(
-                                              radius: 25.0,
-                                              backgroundImage: NetworkImage(
-                                                  orderItem.imgUrl),
-                                              backgroundColor:
-                                                  Colors.transparent,
+                                            leading: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              child: FadeInImage(
+                                                width: 50,
+                                                height: 50,
+                                                placeholder: const AssetImage(
+                                                    Images.placeholderImage),
+                                                image: NetworkImage(
+                                                    orderItem.imgUrl),
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                             title: Text(orderItem.name),
-                                            subtitle:
-                                                Text("${orderItem.price} EGP"),
+                                            subtitle: Container(
+                                                padding: const EdgeInsets.only(
+                                                    top: 4),
+                                                child: Text(
+                                                    "${orderItem.price} EGP")),
                                             trailing: Text(
                                                 "×${orderItem.count}",
                                                 style: const TextStyle(
