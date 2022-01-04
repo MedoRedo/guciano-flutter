@@ -40,7 +40,7 @@ class _ProductWidgetState extends State<ProductWidget>
                 imageUrl: item.imgPath,
                 price: 1.0 * item.price,
                 rating: double.parse(item.rating),
-                description: "gameed awi");
+                description: "Experience the good taste.");
           }));
           //   Navigator.of(context).pushNamed('/AddIdeaRoute',arguments: );
         },
@@ -85,6 +85,7 @@ class _ProductWidgetState extends State<ProductWidget>
                               widget.item.rating.substring(0, 3),
                               style: const TextStyle(
                                 fontSize: 16.0,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],

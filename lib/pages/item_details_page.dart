@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
+import 'package:guciano_flutter/utils/images.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -46,49 +47,46 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   Widget build(BuildContext context) {
     CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Image.network(
-            widget.imageUrl,
-            color: Colors.black38,
-            colorBlendMode: BlendMode.darken,
-            fit: BoxFit.cover,
-            height: 350,
-            width: double.infinity,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
+        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      FadeInImage(
+        width: double.infinity,
+        height: 350,
+        placeholder: const AssetImage(Images.placeholderImage),
+        image: NetworkImage(widget.imageUrl),
+        fit: BoxFit.cover,
+      ),
+      Padding(
+          padding: const EdgeInsets.all(16.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
               widget.name,
               style: const TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: Icon(
-                  Icons.star,
-                  color: Colors.yellow[700],
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 4.0),
+                  child: Icon(
+                    Icons.star,
+                    color: Colors.yellow[700],
+                  ),
                 ),
-              ),
-              Text(
-                widget.rating.toString(),
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
+                Text(
+                  widget.rating.toString(),
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
+              ],
+            ),
+            const SizedBox(height: 16),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Counter(
@@ -103,38 +101,37 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(widget.description),
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton.icon(
-              onPressed: () {
-                CartItem cartItem = CartItem(
-                    id: widget.id,
-                    name: widget.name,
-                    price: widget.price,
-                    count: count,
-                    image: widget.imageUrl);
-                cartProvider.addItem(cartItem);
+            const SizedBox(height: 16),
+            Text(widget.description),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  CartItem cartItem = CartItem(
+                      id: widget.id,
+                      name: widget.name,
+                      price: widget.price,
+                      count: count,
+                      image: widget.imageUrl);
+                  cartProvider.addItem(cartItem);
 
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Item added to Cart"),
-                ));
-                Navigator.of(context).pop();
-              },
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Item added to Cart"),
+                  ));
+                  Navigator.of(context).pop();
+                },
 
-              // Ahmed add to the cart
-              // add to provider here
-              icon: Icon(Icons.shopping_cart),
-              label: const Text('Add to Cart'),
-            ),
-          )
-        ],
-      ),
-    );
+                // Ahmed add to the cart
+                // add to provider here
+                icon: const Icon(Icons.shopping_cart, color: Colors.white),
+                label: const Text(
+                  'Add to Cart',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
+          ])),
+    ]));
   }
 }
