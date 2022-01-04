@@ -6,7 +6,6 @@ import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/providers/home_page_provider.dart';
 import 'package:guciano_flutter/utils/images.dart';
 import 'package:guciano_flutter/widgets/counter_widget.dart';
-import 'package:guciano_flutter/widgets/items_loading_widget.dart';
 import 'package:guciano_flutter/widgets/loading_screen.dart';
 import 'package:provider/provider.dart';
 

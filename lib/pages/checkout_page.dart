@@ -31,7 +31,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   CardFieldInputDetails? _card;
 
-  static const double bottomSheetHeight = 150.0;
+  static const double bottomSheetHeight = 192.0;
 
   @override
   void initState() {
@@ -104,7 +104,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
         // Go to previous orders page.
         homeProvider.selectTab(1);
-        // Navigator.popUntil(context, ModalRoute.withName(HomePage.tag));
         Navigator.pop(context);
         Navigator.pop(context);
       } else {
@@ -181,27 +180,72 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
+                    children: const [
+                      Text(
+                        "Subtotal",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "Delivery Fees",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "Used Balance",
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
                         "Total",
                         style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
                         ),
                       ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
                       Text(
-                        totalPrice.toString(),
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w900,
-                          color: Theme.of(context).accentColor,
+                        "$subtotal EGP",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
                         ),
                       ),
-                      const Text(
-                        "Delivery to dorms charges 20 EGP",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                      const SizedBox(height: 4),
+                      Text(
+                        "$deliveryFees EGP",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "$usedBalance EGP",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "$totalPrice EGP",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.cyan,
                         ),
                       ),
                     ],
@@ -355,15 +399,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  const SizedBox(height: 4.0),
-                  Text(
-                    "Available Balance: ${user.availableBalance} EGP",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 8.0),
+                  Text("Available Balance: ${user.availableBalance} EGP"),
+                  const SizedBox(height: 6.0),
                   Text("Address: Dorm ${user.dormId}"),
                   const SizedBox(height: 16.0),
                 ],
