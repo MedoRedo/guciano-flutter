@@ -110,8 +110,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final loginButton = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+    final loginButton = Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
@@ -139,19 +140,19 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Form(
             key: _formKey,
-            child: ListView(
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(left: 24.0, right: 24.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 logo,
                 const SizedBox(height: 24.0),
                 errorMessage,
-                const SizedBox(height: 12.0),
+                const SizedBox(height: 24.0),
                 email,
-                const SizedBox(height: 8.0),
+                const SizedBox(height: 24.0),
                 password,
                 const SizedBox(height: 24.0),
                 loginButton,
