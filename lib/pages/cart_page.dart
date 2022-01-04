@@ -135,7 +135,7 @@ class _CartPageState extends State<CartPage> {
           child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.grey),
         onPressed: () {
-          homeProvider.chooseTap(0);
+          homeProvider.selectTab(0);
         },
         child: const Text('Add Items', style: TextStyle(color: Colors.white)),
       )),
@@ -159,7 +159,7 @@ class _CartPageState extends State<CartPage> {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(primary: Colors.grey),
           onPressed: () {
-            homeProvider.chooseTap(0);
+            homeProvider.selectTab(0);
           },
           child: const Text('Add Items', style: TextStyle(color: Colors.white)),
         ));

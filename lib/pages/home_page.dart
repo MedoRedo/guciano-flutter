@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: provider.chooseTap,
+        onTap: provider.selectTab,
         selectedItemColor: Theme.of(context).primaryColor,
       ),
     );
