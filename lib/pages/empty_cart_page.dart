@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class EmptyShoppingCartScreen extends StatefulWidget {
+class EmptyCartPage extends StatefulWidget {
   @override
-  _EmptyShoppingCartScreenState createState() =>
-      _EmptyShoppingCartScreenState();
+  _EmptyCartPageState createState() =>
+      _EmptyCartPageState();
 }
 
-class _EmptyShoppingCartScreenState extends State<EmptyShoppingCartScreen> {
+class _EmptyCartPageState extends State<EmptyCartPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

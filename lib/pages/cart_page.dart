@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/cart_item.dart';
-import 'package:guciano_flutter/pages/checkout.dart';
+import 'package:guciano_flutter/pages/checkout_page.dart';
 import 'package:guciano_flutter/pages/empty_cart_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
 import 'package:guciano_flutter/providers/home_page_provider.dart';
@@ -30,7 +30,7 @@ class _CartPageState extends State<CartPage> {
           var cartItems = snapshot.data!;
           var keys = cartItems.keys.toList();
           // return CircleAvatar();
-          if (keys.isEmpty) return EmptyShoppingCartScreen();
+          if (keys.isEmpty) return EmptyCartPage();
           return ListView.builder(
             primary: false,
             shrinkWrap: true,
