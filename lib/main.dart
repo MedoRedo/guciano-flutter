@@ -15,9 +15,9 @@ void main() async {
 
   FirebaseAuth.instance.authStateChanges().listen((User? user) {
     if (user == null) {
-      runApp(MyApp(auth: false));
+      runApp(const MyApp(auth: false));
     } else {
-      runApp(MyApp(auth: true));
+      runApp(const MyApp(auth: true));
     }
   });
 }
@@ -25,23 +25,9 @@ void main() async {
 class MyApp extends StatelessWidget {
   final bool auth;
 
-  MyApp({required this.auth});
-
-  void main() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
-
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        runApp(MyApp(auth: false));
-      } else {
-        runApp(MyApp(auth: true));
-      }
-    });
-  }
+  const MyApp({Key? key, required this.auth}) : super(key: key);
 
   // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -57,10 +43,9 @@ class MyApp extends StatelessWidget {
           title: 'Guciano',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primarySwatch: Colors.lightBlue,
-            fontFamily: 'Nunito',
+            primarySwatch: Colors.deepPurple,
           ),
-          home: auth ? HomePage() : LoginPage(),
+          home: auth ? const HomePage() : const LoginPage(),
           routes: routes,
         ),
       ),
