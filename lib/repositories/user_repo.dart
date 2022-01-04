@@ -60,11 +60,12 @@ class UserRepo {
   }
 
   Future<int> placeOrder(List<CartItem> items, Delivery deliveryOption,
-      Payment paymentOption, num usedBalance) async {
+      Payment paymentOption, num usedBalance, String notes) async {
     var order = {
       'delivery_option': deliveryOption == Delivery.dorm ? 'dorm' : 'kiosk',
       'payment_option': paymentOption == Payment.cash ? 'cash' : 'credit_card',
       'used_balance': usedBalance,
+      'extra_notes': notes,
       'items': items,
     };
 

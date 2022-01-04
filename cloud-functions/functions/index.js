@@ -64,6 +64,7 @@ exports.createOrder = functions.https.onRequest(async (request, response) => {
     order_status: 'in_progress',
     delivery_option: order.delivery_option,
     payment_option: order.payment_option,
+    extra_notes: order.extra_notes,
     items_count: order.items.length,
     total_price: totalPrice,
     timestamp: admin.firestore.FieldValue.serverTimestamp()

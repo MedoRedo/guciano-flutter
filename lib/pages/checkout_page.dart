@@ -27,8 +27,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Delivery? _deliveryMethod = Delivery.kiosk;
   Payment? _paymentMethod = Payment.cash;
 
-  late Future<UserProfile> data;
+  final TextEditingController notesController = TextEditingController();
 
+  late Future<UserProfile> data;
   CardFieldInputDetails? _card;
 
   static const double bottomSheetHeight = 192.0;
@@ -47,12 +48,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   void proceedWithOrder(
-      Delivery delivery, Payment payment, num usedBalance) async {
+      Delivery delivery, Payment payment, num usedBalance, String notes) async {
     if (payment == Payment.cash) {
-      placeOrder(delivery, payment, usedBalance);
+      placeOrder(delivery, payment, usedBalance, notes);
     } else {
       if (_card?.complete == true) {
-        payViaCard(context, delivery, payment, usedBalance);
+        payViaCard(context, delivery, payment, usedBalance, notes);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Please enter missing card details."),
@@ -81,7 +82,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
   }
 
-  void placeOrder(Delivery delivery, Payment payment, num usedBalance) async {
+  void placeOrder(
+      Delivery delivery, Payment payment, num usedBalance, String notes) async {
     var cartItems = await cartProvider.getAllItems();
     if (kDebugMode) {
       print(cartItems);
@@ -92,8 +94,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
 
     userRepo
-        .placeOrder(
-            cartItemsList, _deliveryMethod!, _paymentMethod!, usedBalance)
+        .placeOrder(cartItemsList, _deliveryMethod!, _paymentMethod!,
+            usedBalance, notes)
         .then((value) async {
       if (value == 200) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -118,11 +120,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   payViaCard(BuildContext context, Delivery delivery, Payment payment,
-      num usedBalance) async {
+      num usedBalance, String notes) async {
     // TODO: Pay via card.
 
     // Place the order on success.
-    placeOrder(delivery, payment, usedBalance);
+    placeOrder(delivery, payment, usedBalance, notes);
   }
 
   Widget getPaymentSummary(UserProfile user) {
@@ -148,6 +150,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   fontSize: 16.0,
                   color: Colors.black,
                 ),
+                controller: notesController,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.all(8.0),
                   border: OutlineInputBorder(
@@ -259,8 +262,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       ),
                     ),
                     onPressed: () {
-                      proceedWithOrder(
-                          _deliveryMethod!, _paymentMethod!, usedBalance);
+                      proceedWithOrder(_deliveryMethod!, _paymentMethod!,
+                          usedBalance, notesController.value.text);
                     },
                   ),
                 ],
