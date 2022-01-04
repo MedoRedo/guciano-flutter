@@ -46,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
         _nameTextController.text = user.name;
         _emailTextController.text = user.email;
         _mobileTextController.text = user.phoneNumber;
-        _balanceTextController.text = user.availableBalance.toString();
+        _balanceTextController.text = "${user.availableBalance} EGP";
 
         return ListView(
           padding: const EdgeInsets.all(16.0),
