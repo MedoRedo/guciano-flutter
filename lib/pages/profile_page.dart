@@ -5,7 +5,7 @@ import 'package:guciano_flutter/repositories/auth_repo.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -20,15 +20,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   final _balanceTextController = TextEditingController();
 
-  late final authRepo;
-  late final userRepo;
+  final authRepo = AuthRepo();
+  final userRepo = UserRepo();
 
   late Future<UserProfile> data;
 
   @override
   void initState() {
-    authRepo = AuthRepo();
-    userRepo = UserRepo();
     data = userRepo.getUserProfile();
     super.initState();
   }
@@ -38,10 +36,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return FutureBuilder<UserProfile>(
       future: data,
       builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Center(
+        if (!snapshot.hasData) {
+          return const Center(
             child: CircularProgressIndicator(),
           );
+        }
         UserProfile user = snapshot.data!;
         _nameTextController.text = user.name;
         _emailTextController.text = user.email;
@@ -49,13 +48,13 @@ class _ProfilePageState extends State<ProfilePage> {
         _balanceTextController.text = user.availableBalance.toString();
 
         return ListView(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           children: [
             Center(
               child: Container(
                 height: 140.0,
                 width: 140.0,
-                margin: EdgeInsets.symmetric(vertical: 16.0),
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -77,11 +76,11 @@ class _ProfilePageState extends State<ProfilePage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0)),
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Full Name',
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -89,12 +88,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextField(
                       controller: _nameTextController,
                       readOnly: true,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16.0,
                     ),
-                    Text(
+                    const Text(
                       'Email',
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -102,12 +101,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextField(
                       controller: _emailTextController,
                       readOnly: true,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16.0,
                     ),
-                    Text(
+                    const Text(
                       'Phone',
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -115,12 +114,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextField(
                       controller: _mobileTextController,
                       readOnly: true,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16.0,
                     ),
-                    Text(
+                    const Text(
                       'Available Balance',
                       style: TextStyle(
                           fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -128,20 +127,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextField(
                       controller: _balanceTextController,
                       readOnly: true,
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     )
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 authRepo.signOut().then((_) => Navigator.of(context)
                     .pushNamedAndRemoveUntil(
                         LoginPage.tag, (Route<dynamic> route) => false));
               },
-              child: Text('Log Out', style: TextStyle(color: Colors.white)),
+              child:
+                  const Text('Log Out', style: TextStyle(color: Colors.white)),
             ),
           ],
         );
