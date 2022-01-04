@@ -13,36 +13,44 @@ class Counter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.remove),
-          color: Colors.black,
-          onPressed: (count == 0) ? null : decrement,
-        ),
-        Container(
-          color: primaryColor,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 10.0,
-          ),
-          padding: const EdgeInsets.symmetric(
-            vertical: 3.0,
-            horizontal: 12.0,
-          ),
+        SizedBox(
+            width: 40,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(0),
+                backgroundColor: theme.colorScheme.secondary,
+              ),
+              child: const Icon(
+                Icons.remove,
+                color: Colors.white,
+              ),
+              onPressed: (count == 0) ? null : decrement,
+            )),
+        SizedBox(
+          width: 50,
           child: Text(
             count.toString(),
-            style: TextStyle(
-              color: Colors.white,
-            ),
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.black, fontSize: 18),
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.add),
-          color: primaryColor,
-          onPressed: increment,
-        ),
+        SizedBox(
+            width: 40,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.all(0),
+                backgroundColor: theme.primaryColor,
+              ),
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: increment,
+            )),
       ],
     );
   }
