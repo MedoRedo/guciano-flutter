@@ -30,6 +30,14 @@ class CartProvider with ChangeNotifier {
     return cartItems;
   }
 
+  Future<void> deleteAllItems() async {
+    cartItems = {};
+    _totalPrice = 0;
+    final cartItemDao = database.cartItemDao;
+    await cartItemDao.deleteAllItems();
+    notifyListeners();
+  }
+
   Future<void> addItem(CartItem cartItem) async {
     String id = cartItem.id;
     if (cartItems[id] != null) {
