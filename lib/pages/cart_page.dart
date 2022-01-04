@@ -144,9 +144,8 @@ class _CartPageState extends State<CartPage> {
           child: ElevatedButton(
         style: ElevatedButton.styleFrom(primary: Colors.green),
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-                  CheckoutPage(totalPrice: cartProvider.totalPrice)));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const CheckoutPage()));
         },
         child: const Text('Checkout', style: TextStyle(color: Colors.white)),
       ))
