@@ -198,7 +198,10 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
                                 if (snapshot.hasData &&
                                     snapshot.connectionState ==
                                         ConnectionState.done) {
-                                  return ListView.builder(
+                                  return ListView.separated(
+                                      separatorBuilder: (context, index) {
+                                        return const Divider();
+                                      },
                                       shrinkWrap: true,
                                       physics: const ClampingScrollPhysics(),
                                       itemCount: snapshot.data!.length,
