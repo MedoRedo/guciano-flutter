@@ -26,11 +26,13 @@ class _MenuPageState extends State<MenuPage> {
   late List<ProductItem> items;
   late Category currCat;
 
+  CategoriesRepo categoriesRepo = CategoriesRepo();
+
   Future<void> getCategories() async {
     try {
-      cat = await CategoriesRepo().getCategories();
+      cat = await categoriesRepo.getCategories();
       currCat = cat[0];
-      items = await CategoriesRepo().getCategoryItems(currCat.categoryId);
+      getItems(currCat.categoryId);
       setState(() {
         _initialized = true;
       });
@@ -42,9 +44,10 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   void getItems(catId) async {
-    items = await CategoriesRepo().getCategoryItems(catId);
+    items = await categoriesRepo.getCategoryItems(catId);
   }
 
+  @override
   void initState() {
     getCategories();
     super.initState();
@@ -54,71 +57,72 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return !_initialized
         ? LoadingScreen()
-        : Container(
-            margin: const EdgeInsets.all(16),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text(
-                "Categories",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
-                ),
-              ),
-              Expanded(
-                  child: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return Divider();
-                      },
-                      clipBehavior: Clip.none,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: cat.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                currCat = cat[index];
-                                getItems(currCat.categoryId);
-                              });
-                            },
-                            child: CategoryWidget(
-                              category: cat[index],
-                            ));
-                      })),
-              Text(
-                currCat.name,
-                textAlign: TextAlign.left,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-              ),
-              Expanded(
-                flex: 3,
-                child: FutureBuilder<List<ProductItem>>(
-                  future: CategoriesRepo().getCategoryItems(currCat.categoryId),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<ProductItem>> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text("Something went wrong");
-                    }
+        : Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  "Categories",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                )),
+            Expanded(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: ListView.builder(
+                        clipBehavior: Clip.none,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: cat.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  currCat = cat[index];
+                                  getItems(currCat.categoryId);
+                                });
+                              },
+                              child: CategoryWidget(
+                                category: cat[index],
+                              ));
+                        }))),
+            Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  currCat.name,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 22),
+                )),
+            Expanded(
+              flex: 4,
+              child: FutureBuilder<List<ProductItem>>(
+                future: CategoriesRepo().getCategoryItems(currCat.categoryId),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<ProductItem>> snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text("Something went wrong.");
+                  }
 
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return Divider();
-                          },
-                          itemCount: items.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ProductWidget(
-                              item: items[index],
-                            );
-                          });
-                    }
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.separated(
+                        separatorBuilder: (context, index) {
+                          return const Divider();
+                        },
+                        itemCount: items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProductWidget(
+                            item: items[index],
+                          );
+                        });
+                  }
 
-                    return LoadingScreen();
-                  },
-                ),
+                  return LoadingScreen();
+                },
               ),
-            ]));
+            ),
+          ]);
   }
 }

@@ -29,18 +29,20 @@ class _CategoryWidgetState extends State<CategoryWidget>
   Widget build(BuildContext context) {
     Category cat = widget.category;
     return Container(
-      padding: const EdgeInsets.only(top: 16, right: 16),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       color: Colors.white10,
       height: 40,
       child: Row(
         children: [
           Column(
             children: [
-              Text(
-                cat.name,
-              ),
               CircleAvatar(
                   radius: 34, backgroundImage: NetworkImage(cat.imgPath)),
+              const SizedBox(height: 6),
+              Text(
+                cat.name,
+                style: const TextStyle(fontSize: 16.0),
+              ),
             ],
           ),
         ],
