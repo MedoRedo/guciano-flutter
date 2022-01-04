@@ -4,6 +4,7 @@ import 'package:guciano_flutter/models/order.dart';
 import 'package:guciano_flutter/models/order_item.dart';
 import 'package:guciano_flutter/repositories/user_repo.dart';
 import 'package:guciano_flutter/utils/images.dart';
+import 'package:guciano_flutter/widgets/items_loading_widget.dart';
 
 class PrevOrdersPage extends StatefulWidget {
   static String tag = 'prev-orders-page';
@@ -109,7 +110,7 @@ class _PrevOrdersPageState extends State<PrevOrdersPage> {
         future: userRepo.getPreviousOrders(),
         builder: (context, AsyncSnapshot<List<Order>> snapshot) {
           if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
+            return const ItemsLoading();
           } else {
             var orders = snapshot.data!.toList();
             orders.sort((order1, order2) =>

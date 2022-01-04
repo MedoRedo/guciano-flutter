@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/category.dart';
 import 'package:guciano_flutter/models/product_item.dart';
 import 'package:guciano_flutter/repositories/categories_repo.dart';
+import 'package:guciano_flutter/widgets/items_loading_widget.dart';
 import 'package:guciano_flutter/widgets/loading_screen.dart';
 
 import '../widgets/category_widget.dart';
@@ -119,7 +120,7 @@ class _MenuPageState extends State<MenuPage> {
                         });
                   }
 
-                  return LoadingScreen();
+                  return ItemsLoading();
                 },
               ),
             ),

@@ -5,13 +5,17 @@ import 'package:guciano_flutter/models/cart_item.dart';
 class CartProvider with ChangeNotifier {
   Map<String, CartItem> cartItems = {};
   late AppDatabase database;
+  bool _initializedDB = false;
   double _totalPrice = 0;
 
   double get totalPrice => _totalPrice;
 
   Future<void> getDatabase() async {
-    database =
-        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    if (!_initializedDB) {
+      database =
+          await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+      _initializedDB = true;
+    }
   }
 
   Future<Map<String, CartItem>> getAllItems() async {
@@ -39,6 +43,7 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> addItem(CartItem cartItem) async {
+    await getDatabase();
     String id = cartItem.id;
     if (cartItems[id] != null) {
       cartItem.count = cartItem.count + cartItems[id]!.count;
