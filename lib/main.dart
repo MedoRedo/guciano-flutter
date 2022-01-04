@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:guciano_flutter/pages/home_page.dart';
 import 'package:guciano_flutter/pages/login_page.dart';
 import 'package:guciano_flutter/providers/cart_provider.dart';
@@ -11,6 +12,13 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Stripe.
+  Stripe.publishableKey = "pk_test_TYooMQauvdEDq54NiTphI7jx";
+  Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
+
   await Firebase.initializeApp();
 
   FirebaseAuth.instance.authStateChanges().listen((User? user) {

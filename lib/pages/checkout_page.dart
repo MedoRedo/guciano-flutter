@@ -35,7 +35,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   @override
   void initState() {
-    Stripe.publishableKey = "pk_test_TYooMQauvdEDq54NiTphI7jx";
     data = userRepo.getUserProfile();
     super.initState();
   }
