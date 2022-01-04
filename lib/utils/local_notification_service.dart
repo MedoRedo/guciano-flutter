@@ -18,8 +18,8 @@ class LocalNotificationService {
       const NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
         "guciano",
-        "guciano channel",
-        channelDescription: "this is our channel",
+        "Guciano Notifications",
+        channelDescription: "Receive orders notifications.",
         importance: Importance.max,
         priority: Priority.high,
         playSound: true,
