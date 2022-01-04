@@ -14,16 +14,18 @@ import 'cart_page.dart';
 class HomePage extends StatefulWidget {
   static String tag = 'home-page';
 
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   static final List<NavigationPage> navigationPages = [
-    NavigationPage(title: 'Guciano', widget: MenuPage()),
-    NavigationPage(title: 'My Orders', widget: PrevOrdersPage()),
-    NavigationPage(title: 'Cart', widget: CartPage()),
-    NavigationPage(title: 'Profile', widget: ProfilePage()),
+    NavigationPage(title: 'Guciano', widget: const MenuPage()),
+    NavigationPage(title: 'My Orders', widget: const PrevOrdersPage()),
+    NavigationPage(title: 'Cart', widget: const CartPage()),
+    NavigationPage(title: 'Profile', widget: const ProfilePage()),
   ];
 
   @override
