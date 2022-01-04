@@ -133,7 +133,7 @@ class _CartPageState extends State<CartPage> {
     return Row(children: [
       Expanded(
           child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.grey),
+        style: ElevatedButton.styleFrom(primary: Colors.cyan),
         onPressed: () {
           homeProvider.selectTab(0);
         },
@@ -142,7 +142,7 @@ class _CartPageState extends State<CartPage> {
       const SizedBox(width: 16),
       Expanded(
           child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: Colors.cyan),
+        style: ElevatedButton.styleFrom(primary: Colors.green),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
@@ -157,7 +157,7 @@ class _CartPageState extends State<CartPage> {
     return SizedBox(
         width: double.infinity,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: Colors.grey),
+          style: ElevatedButton.styleFrom(primary: Colors.cyan),
           onPressed: () {
             homeProvider.selectTab(0);
           },
