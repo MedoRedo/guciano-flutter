@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/product_item.dart';
 import 'package:guciano_flutter/pages/item_details_page.dart';
+import 'package:guciano_flutter/utils/images.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({Key? key, required this.item}) : super(key: key);
@@ -44,21 +45,18 @@ class _ProductWidgetState extends State<ProductWidget>
           //   Navigator.of(context).pushNamed('/AddIdeaRoute',arguments: );
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Container(
               color: Colors.white10,
               child: Row(children: [
-                Container(
-                  height: 65.0,
-                  width: 65.0,
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  decoration: BoxDecoration(
-                    // shape: BoxShape.circle,
-                    borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.item.imgPath),
-                      fit: BoxFit.cover,
-                    ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: FadeInImage(
+                    width: 65,
+                    height: 65,
+                    placeholder: const AssetImage(Images.placeholderImage),
+                    image: NetworkImage(widget.item.imgPath),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(

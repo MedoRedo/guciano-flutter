@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:guciano_flutter/models/category.dart';
+import 'package:guciano_flutter/utils/images.dart';
 
 class CategoryWidget extends StatefulWidget {
   const CategoryWidget({Key? key, required this.category}) : super(key: key);
@@ -36,8 +37,16 @@ class _CategoryWidgetState extends State<CategoryWidget>
         children: [
           Column(
             children: [
-              CircleAvatar(
-                  radius: 34, backgroundImage: NetworkImage(cat.imgPath)),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(35),
+                child: FadeInImage(
+                  width: 70,
+                  height: 70,
+                  placeholder: const AssetImage(Images.placeholderImage),
+                  image: NetworkImage(cat.imgPath),
+                  fit: BoxFit.cover,
+                ),
+              ),
               const SizedBox(height: 6),
               Text(
                 cat.name,
