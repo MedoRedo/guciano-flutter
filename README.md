@@ -1,16 +1,15 @@
-# guciano_flutter
+# GUCiano
 
-A new Flutter project.
+Mobile Application Development Project
 
-## Getting Started
+### Overview
 
-This project is a starting point for a Flutter application.
+Our application allows the GUC students and staff to order food online and receive their order on the go or get the order delivered to the GUC dorms in Rehab if they live there.
 
-A few resources to get you started if this is your first Flutter project:
+### Problems The App Solves
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- The user can pay using a credit card instead of cash.
+- If the restaurant doesn't have change, the amount will be added to the user's wallet.
+- The user can order the food early without needing to stand in a long queue.
+- The user can get the order delivered to the dorms if they live there without needing to go to the campus to reserve the order.
+- The user can use the app offline, as data is cached once they are fetched, including the user’s cart, so that they can still explore the food menu and modify their cart even if they don’t have internet access, which is a common problem at the campus.
