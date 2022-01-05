@@ -121,8 +121,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   payViaCard(BuildContext context, Delivery delivery, Payment payment,
       num usedBalance, String notes) async {
-    // TODO: Pay via card.
-
     // Place the order on success.
     placeOrder(delivery, payment, usedBalance, notes);
   }
