@@ -105,5 +105,6 @@ If the pickup method is Delivery to Dorm, a notification will be sent when the o
 - [Http](https://pub.dev/packages/http)
 - [Flutter Local Notification](https://pub.dev/packages/flutter_local_notifications)
 - [Shimmer](https://pub.dev/packages/shimmer)
-- [Stripe](https://pub.dev/packages/flutter_stripe)  
+- [Stripe](https://pub.dev/packages/flutter_stripe)
+- [Floor](https://floor.codes/getting-started/)
 
